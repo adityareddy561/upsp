@@ -295,14 +295,4 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		apiResponseDtoBuilder.withMessage(Constants.SUCCESSFULLY).withStatus(HttpStatus.OK);
 	}
 
-	@Override
-	public void sharePost(ApiResponseDtoBuilder apiResponseDtoBuilder, String email, long id) {
-		if (sellerRepository.existsById(id) || buyerRepository.existsById(id)) {
-			emailService.sendEmail(email, "Share Post With Friends", "Url Of Product", "UPSP-App-product.com", null,
-					null);
-			apiResponseDtoBuilder.withMessage("Post Share Successfully...").withStatus(HttpStatus.OK);
-		} else {
-			apiResponseDtoBuilder.withMessage(Constants.USER_NOT_FOUND).withStatus(HttpStatus.OK);
-		}
-	}
 }

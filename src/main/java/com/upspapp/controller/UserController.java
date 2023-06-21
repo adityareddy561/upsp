@@ -59,6 +59,27 @@ public class UserController {
 		return builder.build();
 	}
 
+	@GetMapping(value = "/seller/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto getSeller(@PathVariable(name = "id") long id) {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		userService.getSellerById(builder, id);
+		return builder.build();
+	}
+
+	@GetMapping(value = "/seller/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto getAllSeller() {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		userService.getAllSeller(builder);
+		return builder.build();
+	}
+
+//	@PostMapping(value = "/buyer/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ApiResponseDto addBuyer(@RequestBody UserDto userDto) {
+//		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+//		userService.addBuyer(builder, userDto);
+//		return builder.build();
+//	}
+
 	@PostMapping(value = "/buyer/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto updateBuyer(@RequestBody Buyer buyer) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
@@ -71,5 +92,33 @@ public class UserController {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
 		userService.deleteBuyerById(builder, id);
 		return builder.build();
+	}
+
+	@GetMapping(value = "/buyer/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto getBuyer(@PathVariable(name = "id") long id) {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		userService.getBuyerById(builder, id);
+		return builder.build();
+	}
+
+	@GetMapping(value = "/buyer/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto getAllBuyer() {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		userService.getAllBuyer(builder);
+		return builder.build();
+	}
+
+	@PostMapping(value = "/change/password")
+	public ApiResponseDto updatePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		userService.updatePasswordById(builder, changePasswordDto);
+		return builder.build();
+	}
+
+	@PostMapping(value = "/user/forgotPassword/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto forgotPassword(@PathVariable(required = true) String email) {
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+		userService.forgotPassword(apiResponseDtoBuilder, email);
+		return apiResponseDtoBuilder.build();
 	}
 }
