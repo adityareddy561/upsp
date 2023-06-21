@@ -12,6 +12,26 @@ import com.upspapp.repository.UserRepository;
 
 public class Utility {
 
+	public static String generateRandomPassword(int len) {
+		String Capital_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String Small_chars = "abcdefghijklmnopqrstuvwxyz";
+		String numbers = "0123456789";
+		String symbols = "!@#$%^&*_=+-/.?<>)";
+
+		String values = Capital_chars + Small_chars + numbers + symbols;
+
+		Random rndm_method = new Random();
+
+		String password = "";
+
+		for (int i = 0; i < len; i++) {
+
+			char ch = values.charAt(rndm_method.nextInt(values.length()));
+			password += ch;
+		}
+		return password;
+	}
+
 	public static User getSessionUser(UserRepository userRepository) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUsername = authentication.getName();
