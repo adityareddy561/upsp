@@ -21,4 +21,6 @@ public interface ISubCategoryService {
 
 	void getAllSubCategoryByCategoryId(ApiResponseDtoBuilder builder, long categoryId);
 
+	void getAllCategoriesWithSubcategories(ApiResponseDtoBuilder builder);
+
 }
