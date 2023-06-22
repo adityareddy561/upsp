@@ -35,4 +35,33 @@ public class IndexController {
 		return "profile";
 	}
 
+	@GetMapping("/sellingCategory")
+	public String forSellingCategory() {
+		return "sellCategory";
+	}
+
+	@GetMapping("/post")
+	public String forAddPost() {
+		return "addPost";
+	}
+
+	@GetMapping("/passwordCheck")
+	public String forPasswords() {
+		return "passwordUpdation";
+	}
+
+	@GetMapping("postDetails")
+	public String forPostDetails() {
+		return "itemDetails";
+	}
+
+	@GetMapping("/ads")
+	public String checkAds() {
+		return "post";
+	}
+
+	@GetMapping("/dynamic")
+	public String dyn() {
+		return "dynamicTable";
+	}
 }
