@@ -31,5 +31,31 @@ function login() {
 			alert("Internal Server Error");
 		}
 	});
+}
+function openForgotPasswordModal() {
+  var modal = document.getElementById("forgotPasswordModal");
+  modal.style.display = "block";
+}
 
+function closeForgotPasswordModal() {
+  var modal = document.getElementById("forgotPasswordModal");
+  modal.style.display = "none";
+}
+
+function forgetPassword() {
+var email = $('#forgetPasswordEmail').val();
+	$.ajax({
+		type: "GET",
+		contentType: "application/json",
+		url: "/api/user/forgotPassword/" + email,
+		dataType: 'json',
+		cache: false,
+		timeout: 600000,
+		success: function(data) {
+			alert('email send successfully ')
+		},
+		error: function() {
+			document.getElementById('feedback').innerHTML = "No Products Available";
+		}
+	});
 }

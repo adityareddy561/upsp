@@ -1,4 +1,5 @@
 function sendOtp(userId) {
+	alert(userId)
 	alert('click successsfull...');
 	var otp = $('#otp').val();
 	var request = {
@@ -20,6 +21,8 @@ function sendOtp(userId) {
 				try {
 					//sessionStorage.setItem('jsonToken', JSON.stringify(data.data.token));
 					localStorage.setItem('jsonToken', JSON.stringify(data.data.token));
+					console.log(localStorage.getItem('jsonToken'));
+					alert('success');	
 					window.location.assign('/homepage');
 				} catch (error) {
 					// Handle the error in the success block
