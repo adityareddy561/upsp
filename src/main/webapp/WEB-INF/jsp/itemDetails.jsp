@@ -1,5 +1,7 @@
+<%@page import="com.upspapp.modal.Advertisement"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -181,7 +183,26 @@
 		</div>
 		<div>
 			<div class="mainItemDetails">
-				
+				<%
+				// Retrieve the product data from sessionStorage
+				String productDataJSON = (String) session.getAttribute("productData");
+				System.out.println(productDataJSON);
+				if (productDataJSON != null) {
+					// Parse the JSON data to a Java object
+					ObjectMapper objectMapper = new ObjectMapper();
+					Advertisement productData = objectMapper.readValue(productDataJSON, Advertisement.class);
+				%>
+				<p id="price"><%="₹ " + productData.getPrice()%></p>
+				<p id="KmDriven"><%=productData.getProductName()%></p>
+				<p id="condition"><%=productData.getAddress()%></p>
+				<p id="address"><%=productData.getDescription()%></p>
+				<%
+				} else {
+				%>
+				<p id="feedback">No Products Available</p>
+				<%
+				}
+				%>
 			</div>
 			<div class="chatWithSeller">
 				<p id="sellerName">Seller</p>
