@@ -115,6 +115,22 @@ public class UserController {
 		return builder.build();
 	}
 
+	@PostMapping(value = "/referFriend/{id}/{email}")
+	public ApiResponseDto addFriend(@PathVariable(required = true) long id,
+			@PathVariable(required = true) String email) {
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+		userService.addFriend(apiResponseDtoBuilder, email, id);
+		return apiResponseDtoBuilder.build();
+	}
+
+	@PostMapping(value = "/sharePost/{id}/{email}")
+	public ApiResponseDto sharePost(@PathVariable(required = true) long id,
+			@PathVariable(required = true) String email) {
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+		userService.sharePost(apiResponseDtoBuilder, email, id);
+		return apiResponseDtoBuilder.build();
+	}
+
 	@PostMapping(value = "/user/forgotPassword/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto forgotPassword(@PathVariable(required = true) String email) {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
