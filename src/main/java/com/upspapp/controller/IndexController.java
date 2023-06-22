@@ -55,10 +55,6 @@ public class IndexController {
 		return "itemDetails";
 	}
 
-	@GetMapping("/ads")
-	public String checkAds() {
-		return "post";
-	}
 
 	@GetMapping("/dynamic")
 	public String dyn() {
