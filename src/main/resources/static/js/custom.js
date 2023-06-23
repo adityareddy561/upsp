@@ -123,16 +123,55 @@ function getProductDetailById(id) {
 		cache: false,
 		timeout: 600000,
 		success: function(data) {
-			alert('yeee')
-			console.log(data.data)
-			console.log(data.data.length)
+			alert('ok')
+			sessionStorage.setItem('productData', JSON.stringify(data.data));
 			window.location.assign('/postDetails');
-				$('.mainItemDetails').append(
-					'< p id = "price" >₹ ' + data.data.price + '</p >'
-					+ '<p id="KmDriven">' + data.data.productName + '</p>'
-					+ '<p id="condition">' + data.data.address + '</p>'
-					+ '<p id="address">' + data.data.description + '</p>'
-				);
+
+		},
+		error: function() {
+			document.getElementById('feedback').innerHTML = "No Products Available";
+		}
+	});
+}
+function getAllcategoriesWithSubCategory() {
+	$.ajax({
+		type: "GET",
+		contentType: "application/json",
+		url: "/api/getAll/categories/subcategories",
+		dataType: 'json',
+		cache: false,
+		timeout: 600000,
+		success: function(data) {
+			if (data.data.length > 0) {
+				var htmlString = "";
+				var itemList = $('.accordion');
+				itemList.empty();
+				for (var item in data.data) {
+					console.log(data.data[item].category.id)
+					console.log(data.data[item].category.categoryName)
+					htmlString += '	<div class="accordion__item">'
+						+ '<div class="accordion__item__header">' + data.data[item].category.categoryName + '</div>' + '<div class="accordion__item__content">'
+
+					for (var item1 in data.data[item].subCategories) {
+						console.log(data.data[item].subCategories[item1].id)
+						console.log(data.data[item].subCategories[item1].subCategoryName)
+						htmlString += '<h4  onclick="opneProduct()" style="cursor: pointer;">' + data.data[item].subCategories[item1].subCategoryName + '</h4>'
+					}
+					htmlString += '</div></div>'
+					itemList.html(htmlString);
+				}
+				$('body').append('	<script>'
+					+ 'if ($(".accordion__item__header").length > 0) {'
+					+ 'var active = "active";'
+					+ '$(".accordion__item__header").click(function() {'
+					+ '$(this).toggleClass(active);'
+					+ '$(this).next("div").slideToggle(200);});}</script>')
+
+			} else {
+				document.getElementById('feedback').innerHTML = "No Products Available";
+			}
+
+
 		},
 		error: function() {
 			document.getElementById('feedback').innerHTML = "No Products Available";

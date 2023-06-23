@@ -195,8 +195,9 @@ profileBtn {
 
 .itemList {
 	display: flex;
-	overflow-x: scroll;
-	white-space: nowrap;
+	flex-wrap: wrap;
+	list-style-type: none;
+	padding: 0;
 }
 
 .forScroll {
@@ -276,12 +277,16 @@ profileBtn {
 						<input id="searchItem" type="text"
 							placeholder="find cars mobiles and more.">
 						<div class="forSearch">
-							<i id="seacrhingIcon" class="fa fa-search" aria-hidden="true" onclick="searchByQuery();"></i>
+							<i id="seacrhingIcon" class="fa fa-search" aria-hidden="true"
+								onclick="searchByQuery();"></i>
 						</div>
 					</div>
 					<ul id="" class="right hide-on-med-and-down">
+						<li><a class="loginBtn" id="loginBtn" href="checkProfile">Me</a></li>
 						<li><a class="loginBtn" id="loginBtn" href="login">Login</a></li>
 						<li><a class="registerBtn" href="registration">Register</a></li>
+						<li><a class="registerBtn" href="#"
+							onclick="showSellingCategory();">Sell</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -297,7 +302,7 @@ profileBtn {
 				<ul id="categories"></ul>
 			</nav>
 			<ul class="itemList">
-			
+
 			</ul>
 			<div id="feedback" class="feedback"></div>
 		</div>
@@ -373,8 +378,6 @@ profileBtn {
 	</div>
 
 	<script type="text/javascript">
-	
-
 		function showProfile() {
 			console.log('hello..');
 			//document.getElementById('dropD').style.display="block";

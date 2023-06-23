@@ -28,10 +28,13 @@
 					<h5 id="msg" class="center-align"></h5>
 					<div class="form center-align">
 						<form id="myform">
-							<input type="text" id="otp" name="otp"
-								placeholder="Enter OTP" required="required" />
+							<input type="text" id="otp" name="otp" placeholder="Enter OTP"
+								required="required" />
+							<%
+							String userId = request.getParameter("userId");
+							%>
 							<button type="submit" class="btn lightblue"
-								onclick="sendOtp(${userId});">Send</button>
+								onclick="sendOtp( <%=userId%>);">Send</button>
 						</form>
 					</div>
 				</div>

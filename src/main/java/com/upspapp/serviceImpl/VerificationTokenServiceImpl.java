@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -75,7 +77,7 @@ public class VerificationTokenServiceImpl implements IVerificationTokenService {
 		sendVerificationToken(user, null);
 		apiResponseDtoBuilder.withMessage("Confirmation email has been sent").withStatus(HttpStatus.OK);
 	}
-	
+
 	@Override
 	public void sendVerificationToken(User user, String password) {
 		new Thread(() -> {
@@ -106,7 +108,7 @@ public class VerificationTokenServiceImpl implements IVerificationTokenService {
 
 	public String createEmailBody(String name, String url, String password) {
 		final String body = "<html><body><h3>Hello " + name.toUpperCase() + "</h3>"
-				+ "<br>You registered an account on <br>" + name + "<br>" + password+"<br>"
+				+ "<br>You registered an account on <br>" + name + "<br>" + password + "<br>"
 				+ "</b>before being able to use your account you need to verify that this is your email verification by clicking here</p>"
 				+ "<br>" + "<a href=\"" + url + "\">  Clicking Here </a>"
 				+ "<br><br><p>Kind Regards,<br>Team UPSP-App <br>Thank You !</body></html>";
@@ -124,7 +126,6 @@ public class VerificationTokenServiceImpl implements IVerificationTokenService {
 		}
 	}
 
-	
 	public String validateVerificationToken(String token) {
 		final VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
 		if (verificationToken == null) {
@@ -161,7 +162,6 @@ public class VerificationTokenServiceImpl implements IVerificationTokenService {
 		Optional<User> optionalUser = userRepository.findById(otpVerification.getUserId());
 		if (optionalUser.isPresent()) {
 			final UserDetails user = userDetailsService.loadUserByUsername(optionalUser.get().getEmail());
-
 			final String token = jwtTokenUtil.generateToken(user);
 			Map<String, Object> response = setTokenDetails(user, token, optionalUser.get());
 			apiResponseDtoBuilder.withStatus(HttpStatus.OK).withMessage(AuthorizationConstants.LOGIN_SUCESSFULL)

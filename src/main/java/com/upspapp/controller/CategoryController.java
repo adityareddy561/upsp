@@ -8,18 +8,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.upspapp.constants.Constants;
 import com.upspapp.modal.Category;
 import com.upspapp.modal.SubCategory;
+import com.upspapp.modal.User;
+import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.CategoryDto;
 import com.upspapp.requestDto.SubCategoryDto;
 import com.upspapp.responseDto.ApiResponseDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
 import com.upspapp.service.ICategoryService;
 import com.upspapp.service.ISubCategoryService;
+import com.upspapp.utility.Utility;
 
 import io.swagger.annotations.Api;
 
@@ -33,6 +35,9 @@ public class CategoryController {
 
 	@Autowired
 	private ISubCategoryService subCategoryService;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@PostMapping(value = "/add/category", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto addCategory(@RequestBody CategoryDto dto) {
@@ -68,10 +73,11 @@ public class CategoryController {
 		categoryService.getAllCategory(builder);
 		return builder.build();
 	}
+
 	@GetMapping(value = "/getAll/category/{query}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto getAllCategory(@PathVariable String query) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
-		categoryService.getAllCategoryByLikeQuery(builder,query);
+		categoryService.getAllCategoryByLikeQuery(builder, query);
 		return builder.build();
 	}
 
@@ -116,6 +122,13 @@ public class CategoryController {
 	public ApiResponseDto getAllSubCategoryByCategoryId(@PathVariable(name = "categoryId") long categoryId) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
 		subCategoryService.getAllSubCategoryByCategoryId(builder, categoryId);
+		return builder.build();
+	}
+
+	@GetMapping(value = "/getAll/categories/subcategories", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto getAllCategoriesWithSubcategories() {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		subCategoryService.getAllCategoriesWithSubcategories(builder);
 		return builder.build();
 	}
 }
