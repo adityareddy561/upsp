@@ -120,6 +120,24 @@ public class AdvertisementServiceimpl implements IAdvertisementService {
 	}
 
 	@Override
+	public void savePost(PostSaveDto dto, ApiResponseDtoBuilder builder) {
+		PostSave savedDto = mapper.saveDtoToSaved(dto);
+		savedDto.setCreatedAt(new Date());
+		saveRepository.save(savedDto);
+		builder.withMessage(Constants.SAVE).withStatus(HttpStatus.OK);
+	}
+
+	@Override
+	public void unsaveProduct(PostSaveDto dto, ApiResponseDtoBuilder builder) {
+		if (saveRepository.existsByBuyerIdAndProductId(dto.getBuyerId(), dto.getProductId())) {
+			saveRepository.deleteByBuyerIdAndProductId(dto.getBuyerId(), dto.getProductId());
+			builder.withMessage(Constants.UNSAVED).withStatus(HttpStatus.OK);
+		} else {
+			builder.withMessage(Constants.ALREADY_UNSAVED).withStatus(HttpStatus.OK);
+		}
+	}
+
+	@Override
 	public void getAllProductbyOrder(int byOrder, ApiResponseDtoBuilder builder) {
 		if (byOrder == 0) {
 			List<Advertisement> listOfProduct = advertisementRepository.findByOrderByPriceAsc();
