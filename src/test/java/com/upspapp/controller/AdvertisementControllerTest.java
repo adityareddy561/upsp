@@ -70,6 +70,36 @@ public class AdvertisementControllerTest {
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
+	@Test
+	public void getProduct() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url = URL + port + "/api/get/product/" + 1;
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.getForEntity(url,
+				ApiResponseDtoBuilder.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+
+	@Test
+	public void deleteProduct() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url = URL + port + "/api/delete/product/" + 1;
+		String urlTemplate = UriComponentsBuilder.fromHttpUrl(url).encode().toUriString();
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.exchange(urlTemplate, HttpMethod.DELETE,
+				null, ApiResponseDtoBuilder.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+
+	@Test
+	public void getAllProduct() throws Exception {
+		String url = URL + port + "/api/getAll/product";
+
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.getForEntity(url,
+				ApiResponseDtoBuilder.class);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
 
 	@Test
 	public void addLike() throws Exception {

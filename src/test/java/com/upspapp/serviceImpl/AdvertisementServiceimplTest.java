@@ -32,7 +32,6 @@ public class AdvertisementServiceimplTest {
 
 	@InjectMocks
 	AdvertisementServiceimpl advertisementServiceimpl;
-
 	@Mock
 	private AdvertisementRepository advertisementRepository;
 
@@ -102,7 +101,40 @@ public class AdvertisementServiceimplTest {
 
 	}
 
-	
+	@Test
+	public void deleteProductById() {
+		long id = 1L;
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+		Advertisement advertisement = new Advertisement();
+		advertisement.setId(id);
+		advertisement.setCreatedAt(new Date());
+		advertisement.setDescription("test");
+		advertisement.setOwner("altaf");
+		advertisement.setPrice(10L);
+		advertisement.setProductName("test");
+		Optional<Advertisement> optionalAdvertisement = Optional.of(advertisement);
+		when(advertisementRepository.findById(id)).thenReturn(optionalAdvertisement);
+		assertTrue(optionalAdvertisement.isPresent());
+		advertisementServiceimpl.deleteProductById(apiResponseDtoBuilder, id);
+		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.DELETE_PRODUCT));
+	}
+
+	@Test
+	public void getAllProduct() {
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+		Advertisement advertisement = new Advertisement();
+		advertisement.setId(1L);
+		advertisement.setCreatedAt(new Date());
+		advertisement.setDescription("test");
+		advertisement.setOwner("altaf");
+		advertisement.setPrice(10L);
+		advertisement.setProductName("test");
+		List<Advertisement> listOfAdvertisement = new ArrayList<>();
+		listOfAdvertisement.add(advertisement);
+		when(advertisementRepository.findAll()).thenReturn(listOfAdvertisement);
+		advertisementServiceimpl.getAllProduct(apiResponseDtoBuilder);
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
+	}
 
 	@Test
 	public void addLike() {
