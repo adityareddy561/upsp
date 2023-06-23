@@ -85,6 +85,23 @@ public class AdvertisementServiceimpl implements IAdvertisementService {
 	}
 
 	@Override
+	public void deleteProductById(ApiResponseDtoBuilder builder, long id) {
+		Optional<Advertisement> advertisement = advertisementRepository.findById(id);
+		if (advertisement.isPresent()) {
+			advertisementRepository.deleteById(advertisement.get().getId());
+			builder.withMessage(Constants.DELETE_PRODUCT).withStatus(HttpStatus.OK);
+		} else {
+			builder.withStatus(HttpStatus.NOT_FOUND).withMessage(Constants.PRODUCT_NOT_FOUND);
+		}
+	}
+
+	@Override
+	public void getAllProduct(ApiResponseDtoBuilder builder) {
+		List<Advertisement> listOfProduct = advertisementRepository.findAll();
+		builder.withData(listOfProduct).withMessage("success").withStatus(HttpStatus.OK);
+	}
+
+	@Override
 	public void addLike(PostLikeDto dto, ApiResponseDtoBuilder builder) {
 		PostLike likes = mapper.likeDtoToLikes(dto);
 		likes.setCreatedAt(new Date());
@@ -101,15 +118,6 @@ public class AdvertisementServiceimpl implements IAdvertisementService {
 			builder.withMessage(Constants.ALREADY_DISLIKE).withStatus(HttpStatus.ALREADY_REPORTED);
 		}
 	}
-
-	@Override
-	public void savePost(PostSaveDto dto, ApiResponseDtoBuilder builder) {
-		PostSave savedDto = mapper.saveDtoToSaved(dto);
-		savedDto.setCreatedAt(new Date());
-		saveRepository.save(savedDto);
-		builder.withMessage(Constants.SAVE).withStatus(HttpStatus.OK);
-	}
-
 
 	@Override
 	public void getAllProductbyOrder(int byOrder, ApiResponseDtoBuilder builder) {
