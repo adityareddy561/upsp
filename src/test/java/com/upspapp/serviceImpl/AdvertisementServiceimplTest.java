@@ -164,4 +164,33 @@ public class AdvertisementServiceimplTest {
 		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.DISLIKE));
 	}
 
+	@Test
+	public void savePost() {
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+		PostSaveDto savedDto = new PostSaveDto();
+		savedDto.setBuyerId(1L);
+		savedDto.setProductId(1L);
+		PostSave saved = new PostSave();
+		saved.setId(1L);
+		saved.setCreatedAt(new Date());
+		saved.setBuyerId(1L);
+		saved.setProductId(1L);
+		when(mapper.saveDtoToSaved(savedDto)).thenReturn(saved);
+		when(saveRepository.save(saved)).thenReturn(saved);
+		advertisementServiceimpl.savePost(savedDto, apiResponseDtoBuilder);
+		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.SAVE));
+
+	}
+
+	@Test
+	public void unsaveProduct() {
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+		PostSaveDto savedDto = new PostSaveDto();
+		savedDto.setBuyerId(1L);
+		savedDto.setProductId(1L);
+		when(saveRepository.existsByBuyerIdAndProductId(savedDto.getBuyerId(), savedDto.getProductId()))
+				.thenReturn(true);
+		advertisementServiceimpl.unsaveProduct(savedDto, apiResponseDtoBuilder);
+		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.UNSAVED));
+	}
 }

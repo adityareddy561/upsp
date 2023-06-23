@@ -26,6 +26,10 @@ public interface IAdvertisementService {
 
 	void deleteLike(PostLikeDto dto, ApiResponseDtoBuilder builder);
 
+	void savePost(PostSaveDto dto, ApiResponseDtoBuilder builder);
+
+	void unsaveProduct(PostSaveDto dto, ApiResponseDtoBuilder builder);
+
 	void getAllProductbyOrder(int  byOrder, ApiResponseDtoBuilder builder);
 
 	void getAllProductBySellerId(ApiResponseDtoBuilder builder, long sellerId);

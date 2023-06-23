@@ -133,6 +133,35 @@ public class AdvertisementControllerTest {
 	}
 
 	@Test
+	public void savePost() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		PostSaveDto dto = new PostSaveDto();
+		dto.setBuyerId(1L);
+		dto.setProductId(1L);
+		String url = URL + port + "/api/save/product";
+		HttpEntity<PostSaveDto> request = new HttpEntity<>(dto, headers);
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.postForEntity(url, request,
+				ApiResponseDtoBuilder.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	@Test
+	public void unsaveProduct() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		PostSaveDto dto = new PostSaveDto();
+		dto.setBuyerId(1L);
+		dto.setProductId(1L);
+		String url = URL + port + "/api/unsave/product";
+		HttpEntity<PostSaveDto> request = new HttpEntity<>(dto, headers);
+		String urlTemplate = UriComponentsBuilder.fromHttpUrl(url).encode().toUriString();
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.exchange(urlTemplate, HttpMethod.DELETE,
+				request, ApiResponseDtoBuilder.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	@Test
 	public void getAllProductbyOrder() throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);

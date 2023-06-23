@@ -92,6 +92,22 @@ public class AdvertisementController {
 		return builder.build();
 	}
 
+
+	@PostMapping(value = "/save/product", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto savePost(@RequestBody PostSaveDto dto) {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		advertisementService.savePost(dto, builder);
+		return builder.build();
+	}
+
+
+	@DeleteMapping(value = "/unsave/product", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto unsavePost(@RequestBody PostSaveDto dto) {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		advertisementService.unsaveProduct(dto, builder);
+		return builder.build();
+	}
+
 	@GetMapping(value = "/search/Product/{byOrder}",  produces = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto getAllProductbyOrder(@PathVariable(name = "byOrder") int byOrder) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
