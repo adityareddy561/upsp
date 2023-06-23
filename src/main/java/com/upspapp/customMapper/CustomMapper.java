@@ -38,6 +38,8 @@ public interface CustomMapper {
 
 	SubCategory subCategoryDtoToSubCategory(SubCategoryDto dto);
 
+	Report reportDtoToReport(ReportDto dto);
+
 	Feedback feedbackDtoToFeedback(FeedbackDto dto);
 
 	PostLike likeDtoToLikes(PostLikeDto dto);
@@ -48,5 +50,6 @@ public interface CustomMapper {
 
 	Seller userDtoToSeller(UserDto dto);
 
+	
 
 }
