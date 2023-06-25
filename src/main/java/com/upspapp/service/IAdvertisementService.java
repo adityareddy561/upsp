@@ -17,20 +17,15 @@ public interface IAdvertisementService {
 
 	void updateProductById(ApiResponseDtoBuilder builder, Advertisement advertisement);
 
-	void deleteProductById(ApiResponseDtoBuilder builder, long id);
-
 	void getAllProduct(ApiResponseDtoBuilder builder);
-	void getAllProducts(ApiResponseDtoBuilder builder,String query);
 
-	void addLike(PostLikeDto dto, ApiResponseDtoBuilder builder);
+	void getAllProducts(ApiResponseDtoBuilder builder, String query);
 
-	void deleteLike(PostLikeDto dto, ApiResponseDtoBuilder builder);
+	void likeAndDislike(PostLikeDto dto, ApiResponseDtoBuilder builder);
 
-	void savePost(PostSaveDto dto, ApiResponseDtoBuilder builder);
+	void saveAndUnSavePost(PostSaveDto dto, ApiResponseDtoBuilder builder);
 
-	void unsaveProduct(PostSaveDto dto, ApiResponseDtoBuilder builder);
-
-	void getAllProductbyOrder(int  byOrder, ApiResponseDtoBuilder builder);
+	void getAllProductbyOrder(int byOrder, ApiResponseDtoBuilder builder);
 
 	void getAllProductBySellerId(ApiResponseDtoBuilder builder, long sellerId);
 

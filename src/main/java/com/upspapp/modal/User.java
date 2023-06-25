@@ -48,6 +48,7 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	private String mobileNumber;
+	// 0=admin 1=user
 	private Integer role;
 	private Boolean active = Boolean.TRUE;
 	

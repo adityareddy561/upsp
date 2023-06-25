@@ -13,12 +13,15 @@ import com.upspapp.constants.Constants;
 import com.upspapp.customMapper.CustomMapper;
 import com.upspapp.modal.Category;
 import com.upspapp.modal.SubCategory;
+import com.upspapp.modal.User;
 import com.upspapp.repository.CategoryRepository;
 import com.upspapp.repository.SubCategoryRepository;
+import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.SubCategoryDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
 import com.upspapp.responseDto.CategoriesAndSubcategories;
 import com.upspapp.service.ISubCategoryService;
+import com.upspapp.utility.Utility;
 
 @Service
 public class SubcategoryServiceImpl implements ISubCategoryService {
@@ -31,13 +34,19 @@ public class SubcategoryServiceImpl implements ISubCategoryService {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	public void addSubCategory(ApiResponseDtoBuilder builder, SubCategoryDto dto) {
+		User sessionUser = Utility.getSessionUser(userRepository);
+		if (sessionUser == null || sessionUser.getRole() != 0) {
+			builder.withMessage("UnAuthorize").withStatus(HttpStatus.UNAUTHORIZED);
+		}
 		SubCategory subCategory = mapper.subCategoryDtoToSubCategory(dto);
 		subCategory.setCreatedAt(new Date());
 		subCategoryRepository.save(subCategory);
-		builder.withData(subCategory).withMessage(Constants.ADD_SUB_CATEGORY).withStatus(HttpStatus.OK);
+		builder.withData(subCategory).withMessage("success").withStatus(HttpStatus.OK);
 	}
 
 	@Override

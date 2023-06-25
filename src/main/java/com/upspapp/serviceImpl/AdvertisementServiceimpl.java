@@ -85,56 +85,35 @@ public class AdvertisementServiceimpl implements IAdvertisementService {
 	}
 
 	@Override
-	public void deleteProductById(ApiResponseDtoBuilder builder, long id) {
-		Optional<Advertisement> advertisement = advertisementRepository.findById(id);
-		if (advertisement.isPresent()) {
-			advertisementRepository.deleteById(advertisement.get().getId());
-			builder.withMessage(Constants.DELETE_PRODUCT).withStatus(HttpStatus.OK);
-		} else {
-			builder.withStatus(HttpStatus.NOT_FOUND).withMessage(Constants.PRODUCT_NOT_FOUND);
-		}
-	}
-
-	@Override
 	public void getAllProduct(ApiResponseDtoBuilder builder) {
 		List<Advertisement> listOfProduct = advertisementRepository.findAll();
 		builder.withData(listOfProduct).withMessage("success").withStatus(HttpStatus.OK);
 	}
 
 	@Override
-	public void addLike(PostLikeDto dto, ApiResponseDtoBuilder builder) {
+	public void likeAndDislike(PostLikeDto dto, ApiResponseDtoBuilder builder) {
+		if (likeRepository.existsByBuyerIdAndProductId(dto.getBuyerId(), dto.getProductId())) {
+			likeRepository.deleteByBuyerIdAndProductId(dto.getBuyerId(), dto.getProductId());
+			builder.withMessage("success").withStatus(HttpStatus.OK);
+			return;
+		}
 		PostLike likes = mapper.likeDtoToLikes(dto);
 		likes.setCreatedAt(new Date());
 		likeRepository.save(likes);
-		builder.withMessage(Constants.ADD_LIKES).withStatus(HttpStatus.OK);
+		builder.withMessage("success").withStatus(HttpStatus.OK);
 	}
 
 	@Override
-	public void deleteLike(PostLikeDto dto, ApiResponseDtoBuilder builder) {
-		if (likeRepository.existsByBuyerIdAndProductId(dto.getBuyerId(), dto.getProductId())) {
-			likeRepository.deleteByBuyerIdAndProductId(dto.getBuyerId(), dto.getProductId());
-			builder.withMessage(Constants.DISLIKE).withStatus(HttpStatus.OK);
-		} else {
-			builder.withMessage(Constants.ALREADY_DISLIKE).withStatus(HttpStatus.ALREADY_REPORTED);
+	public void saveAndUnSavePost(PostSaveDto dto, ApiResponseDtoBuilder builder) {
+		if (saveRepository.existsByBuyerIdAndProductId(dto.getBuyerId(), dto.getProductId())) {
+			saveRepository.deleteByBuyerIdAndProductId(dto.getBuyerId(), dto.getProductId());
+			builder.withMessage("success").withStatus(HttpStatus.OK);
+			return;
 		}
-	}
-
-	@Override
-	public void savePost(PostSaveDto dto, ApiResponseDtoBuilder builder) {
 		PostSave savedDto = mapper.saveDtoToSaved(dto);
 		savedDto.setCreatedAt(new Date());
 		saveRepository.save(savedDto);
-		builder.withMessage(Constants.SAVE).withStatus(HttpStatus.OK);
-	}
-
-	@Override
-	public void unsaveProduct(PostSaveDto dto, ApiResponseDtoBuilder builder) {
-		if (saveRepository.existsByBuyerIdAndProductId(dto.getBuyerId(), dto.getProductId())) {
-			saveRepository.deleteByBuyerIdAndProductId(dto.getBuyerId(), dto.getProductId());
-			builder.withMessage(Constants.UNSAVED).withStatus(HttpStatus.OK);
-		} else {
-			builder.withMessage(Constants.ALREADY_UNSAVED).withStatus(HttpStatus.OK);
-		}
+		builder.withMessage("success").withStatus(HttpStatus.OK);
 	}
 
 	@Override

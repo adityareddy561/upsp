@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.upspapp.constants.Constants;
 import com.upspapp.modal.Buyer;
 import com.upspapp.modal.Seller;
+import com.upspapp.modal.User;
 import com.upspapp.requestDto.ChangePasswordDto;
 import com.upspapp.requestDto.UserDto;
 import com.upspapp.responseDto.ApiResponseDto;
@@ -35,8 +36,6 @@ public class UserController {
 		userService.addAdmin(builder, dto);
 		return builder.build();
 	}
-	
-	
 
 	@PostMapping(value = "/user/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto addSeller(@RequestBody UserDto userDto) {
@@ -101,6 +100,13 @@ public class UserController {
 		return builder.build();
 	}
 
+	@GetMapping(value = "/user/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto getUser(@PathVariable(name = "id") long id) {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		userService.getUserById(builder, id);
+		return builder.build();
+	}
+
 	@GetMapping(value = "/buyer/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto getAllBuyer() {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
@@ -131,7 +137,14 @@ public class UserController {
 		return apiResponseDtoBuilder.build();
 	}
 
-	@PostMapping(value = "/user/forgotPassword/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/user/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto updateUser(@RequestBody User user) {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		userService.updateUser(builder, user);
+		return builder.build();
+	}	
+
+	@GetMapping(value = "/user/forgotPassword/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto forgotPassword(@PathVariable(required = true) String email) {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
 		userService.forgotPassword(apiResponseDtoBuilder, email);

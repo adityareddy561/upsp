@@ -106,7 +106,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 			verificationTokenService.sendVerificationToken(seller, dto.getPassword());
 			return;
 		}
-		
+
 		if (dto.getUserType().equalsIgnoreCase("buyer")) {
 			if (buyerRepository.existsByMobileNumber(dto.getMobileNumber())
 					|| repository.existsByMobileNumber(dto.getMobileNumber())) {
@@ -303,6 +303,35 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 			apiResponseDtoBuilder.withMessage("Post Share Successfully...").withStatus(HttpStatus.OK);
 		} else {
 			apiResponseDtoBuilder.withMessage(Constants.USER_NOT_FOUND).withStatus(HttpStatus.OK);
+		}
+	}
+
+	@Override
+	public void getUserById(ApiResponseDtoBuilder builder, long id) {
+		Optional<User> user = repository.findById(id);
+		if (user.isPresent()) {
+			builder.withMessage("success").withStatus(HttpStatus.OK).withData(user.get());
+		} else {
+			builder.withMessage(Constants.BUYER_NOT_FOUND).withStatus(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@Override
+	public void updateUser(ApiResponseDtoBuilder builder, User user) {
+		Optional<User> optionalUser = repository.findById(user.getId());
+		if (optionalUser.isPresent()) {
+			User userObj = optionalUser.get();
+			userObj.setEmail(user.getEmail());
+			userObj.setFullName(user.getFullName());
+			userObj.setMobileNumber(user.getMobileNumber());
+			//String newPasswordEncodedString = bCryptPasswordEncoder.encode(user.getPassword());
+			//userObj.setPassword(newPasswordEncodedString);
+			userObj.setUpdatedAt(new Date());
+			repository.save(userObj);
+			builder.withMessage("success").withStatus(HttpStatus.OK).withData(userObj);
+		} else {
+			builder.withMessage(Constants.USER_NOT_FOUND).withStatus(HttpStatus.NOT_FOUND);
 		}
 	}
 }
