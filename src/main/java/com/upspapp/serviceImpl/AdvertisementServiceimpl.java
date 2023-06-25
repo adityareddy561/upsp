@@ -85,6 +85,17 @@ public class AdvertisementServiceimpl implements IAdvertisementService {
 	}
 
 	@Override
+	public void deleteProductById(ApiResponseDtoBuilder builder, long id) {
+		Optional<Advertisement> advertisement = advertisementRepository.findById(id);
+		if (advertisement.isPresent()) {
+			advertisementRepository.deleteById(advertisement.get().getId());
+			builder.withMessage(Constants.DELETE_PRODUCT).withStatus(HttpStatus.OK);
+		} else {
+			builder.withStatus(HttpStatus.NOT_FOUND).withMessage(Constants.PRODUCT_NOT_FOUND);
+		}
+	}
+
+	@Override
 	public void getAllProduct(ApiResponseDtoBuilder builder) {
 		List<Advertisement> listOfProduct = advertisementRepository.findAll();
 		builder.withData(listOfProduct).withMessage("success").withStatus(HttpStatus.OK);

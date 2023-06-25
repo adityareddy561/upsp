@@ -17,6 +17,8 @@ public interface IAdvertisementService {
 
 	void updateProductById(ApiResponseDtoBuilder builder, Advertisement advertisement);
 
+	void deleteProductById(ApiResponseDtoBuilder builder, long id);
+
 	void getAllProduct(ApiResponseDtoBuilder builder);
 
 	void getAllProducts(ApiResponseDtoBuilder builder, String query);
