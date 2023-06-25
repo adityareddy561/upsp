@@ -1,8 +1,4 @@
 function updateProfile(){
-
-
-	console.log("page is ready..");
-	alert("page is ready..");
 		   var email =$('#emailInput').val();
            var firstName=$('#firstnameInput').val();
            var lastName=$('#lastnameInput').val();
@@ -31,8 +27,6 @@ function updateProfile(){
 		success  : function(data) {
 		console.log('request send successfully...');
 			if(data['message'] =='success'){
-		         	console.log('msg success...');
-			            alert('profileUpdate Successfully..');
     				window.location.assign('homepage');	
 			}else{
 				alert("User name and Password is wrong !")

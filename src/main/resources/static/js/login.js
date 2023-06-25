@@ -1,5 +1,4 @@
 function login() {
-	alert('click successsfull...')
 	var userName = $('#username').val();
 	var password = $('#password').val();
 	var request = {
@@ -16,11 +15,10 @@ function login() {
 		cache: false,
 		timeout: 600000,
 		success: function(data) {
-			console.log('response recieve successfully...');
-			console.log(data);
 			if (data['message'] == 'Login Sucessfull') {
 				console.log('response successfully...');
-				window.location.assign('otp?userId='+data.data);
+				localStorage.setItem('loginUser', JSON.stringify(data.data));
+				window.location.assign('otp');
 			} else {
 				console.log(data['message']);
 				alert("User name and Password is wrong !")
@@ -33,17 +31,17 @@ function login() {
 	});
 }
 function openForgotPasswordModal() {
-  var modal = document.getElementById("forgotPasswordModal");
-  modal.style.display = "block";
+	var modal = document.getElementById("forgotPasswordModal");
+	modal.style.display = "block";
 }
 
 function closeForgotPasswordModal() {
-  var modal = document.getElementById("forgotPasswordModal");
-  modal.style.display = "none";
+	var modal = document.getElementById("forgotPasswordModal");
+	modal.style.display = "none";
 }
 
 function forgetPassword() {
-var email = $('#forgetPasswordEmail').val();
+	var email = $('#forgetPasswordEmail').val();
 	$.ajax({
 		type: "GET",
 		contentType: "application/json",

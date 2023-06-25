@@ -1,6 +1,4 @@
 function postAdd(){
-	console.log("page is ready..");
-	alert("page is ready..");
 		      var title =$('#title').val();
               var brand=$('#brand').val();
 		      var model =$('#model').val();
@@ -69,7 +67,6 @@ function postDetails(subCategory){
 
 
 function showPostImages(clas){
-	console.log('click success..')
 			   const imgCollection = document.getElementsByClassName(clas);
 			   for(let i=0;i<imgCollection.length;i++){   
 				   document.getElementById('postImg'+i).src=imgCollection[i];
