@@ -5,7 +5,9 @@
 <html lang="en">
 <head>
 <link rel="preconnect" href="https://fonts.gstatic.com">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="js/profile.js"></script>
+
 <style type="text/css">
 * {
 	margin: 0;
@@ -158,18 +160,20 @@ h3 {
 	padding: 3px 0px;
 }
 </style>
+<%
+String userId = request.getParameter("userId");
+%>
 </head>
-<body>
+<body onload="loadUserById()">
 	<div class="container">
 		<div class="user-image">
 			<img
 				src="https://sialifehospital.com/wp-content/uploads/2021/04/testimonial-1.png"
 				alt="this image contains user-image">
 		</div>
-
-		<h3>Full Name : Altaf khan</h3>
-		<h3>Email : altaf@gmail.com</h3>
-		<h3>Mobile Number : 123456789</h3>
+		<h3 id="name"></h3>
+		<h3 id="mail"></h3>
+		<h3 id="mobile"></h3>
 		<div class="content">
 			<div class="links">
 				<a class="facebook" href="" target="_blank" title="GFG_facebook">
@@ -182,26 +186,41 @@ h3 {
 					<i class="fab fa-instagram-square"></i>
 				</a>
 			</div>
-			<button class="editProfile">Edit Profile</button>
-			<div style="text-align: center; margin: 10px 0px;">
-				<span style="cursor: pointer;" onclick="changePassword()">Change
-					Password</span>
+			<button onclick="editProfile()" class="editProfile">Edit
+				Profile</button>
+			<div id="editProfile" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closeEditProfile()">&times;</span>
+					<!-- Place your forgot password design content here -->
+					<h2>-: Edit Profile :-</h2>
+					<form style="text-align: left;">
+						<p>Enter Name</p>
+						<input id="name" class="editProfileInput" type="text"
+							placeholder="Enter your full name :" required>
+						<p>Enter Email</p>
+						<input id="email" class="editProfileInput" type="email"
+							placeholder="Enter your email :" required>
+						<p>Enter mobile number</p>
+						<input id="mobileNumber" class=editProfileInput type="text"
+							placeholder="Enter your mobile number :" required><br>
+						<button style="padding: 5px 10px; width: 20%" type="button"onclick="editProfileById();">Update</button>
+					</form>
+				</div>
+			</div>
+			<div id="changepswd" style="text-align: center; margin: 10px 0px;">
+
 			</div>
 			<div id="changePassword" class="modal">
 				<div class="modal-content">
 					<span class="close" onclick="closeChangePassword()">&times;</span>
 					<!-- Place your forgot password design content here -->
 					<h2>Change Password</h2>
-
 					<form style="text-align: left;">
-						<p>Enter Id</p>
-						<input id="id" class="changePasswordInput" type="text"
-							placeholder="Enter Id" required>
 						<p>Enter New Password</p>
 						<input id="newPassword" class="changePasswordInput"
 							type="password" placeholder="Enter Password" required>
-						<button onclick="updatePassword()" style="padding: 5px 10px"
-							type="submit">Send</button>
+						<div id="updtPswd"></div>
+
 					</form>
 				</div>
 			</div>

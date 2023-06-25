@@ -190,7 +190,7 @@ button {
 										name="registerBy" type="radio" value="Buyer" /> <span>Buyer</span>
 									</label>
 								</div>
-								<button type="submit" class="btn" onclick="userRegister();">Register</button>
+								<button type="button" class="btn" onclick="userRegister();">Register</button>
 							</form>
 						</div>
 					</div>

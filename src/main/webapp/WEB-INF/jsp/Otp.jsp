@@ -30,11 +30,7 @@
 						<form id="myform">
 							<input type="text" id="otp" name="otp" placeholder="Enter OTP"
 								required="required" />
-							<%
-							String userId = request.getParameter("userId");
-							%>
-							<button type="submit" class="btn lightblue"
-								onclick="sendOtp( <%=userId%>);">Send</button>
+							<button type="button" class="btn lightblue" onclick="sendOtp()">Send</button>
 						</form>
 					</div>
 				</div>
