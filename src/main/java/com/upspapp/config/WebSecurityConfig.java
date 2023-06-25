@@ -19,10 +19,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class WebSecurityConfig {
 	private final String[] antMatchers = new String[] { "/api/auth/login/**", "/api/auth/admin/login", "/api/file/**",
-			"/v2/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources", "/login/**","/registration/**",
-			"/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**", "/api/admin/add/**",
-			"/api/registrationConfirm/**", "/api/otpVerification/**", "/**" , "/js/**","/otp/**"};
-	
+			"/v2/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources", "/login/**",
+			"/registration/**", "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**",
+			"/api/admin/add/**", "/api/user/add/**", "/api/registrationConfirm/**", "/api/otpVerification/**", "/index",
+			"/api/getAll/product", "/js/**", "/otp/**", "/api/getAll/productByQuery/**", "/api/get/product/**",
+			"/checkProfile", "/api/user/forgotPassword/", "/api/otpVerification", "/homepage", "/dashboard",
+			"/api/getAll/category" };
+
 	@Resource(name = "userService")
 	private UserDetailsService userDetailsService;
 
@@ -57,7 +60,7 @@ public class WebSecurityConfig {
 	AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
 		return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailsService)
 				.passwordEncoder(encoder()).and().build();
-		
+
 	}
 
 }
