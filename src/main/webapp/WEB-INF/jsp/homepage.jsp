@@ -234,17 +234,18 @@ profileBtn {
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"
 	integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
 	crossorigin="anonymous"></script>
-
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<!-- <script src="js/register.js" type="text/javascript"></script> -->
-<script src="js/custom.js" type="text/javascript"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="js/register.js" type="text/javascript"></script>
+<script src="js/custom.js" type="text/javascript"></script>
 <script src="js/sellingCategory.js" type="text/javascript"></script>
 <script src="js/profile.js" type="text/javascript"></script>
 <script src="js/updateProfile.js" type="text/javascript"></script>
@@ -281,12 +282,8 @@ profileBtn {
 								onclick="searchByQuery();"></i>
 						</div>
 					</div>
-					<ul id="" class="right hide-on-med-and-down">
-						<li><a class="loginBtn" id="loginBtn" href="checkProfile">Me</a></li>
-						<li><a class="loginBtn" id="loginBtn" href="login">Login</a></li>
-						<li><a class="registerBtn" href="registration">Register</a></li>
-						<li><a class="registerBtn" href="#"
-							onclick="showSellingCategory();">Sell</a></li>
+					<li><a class="registerBtn" href="registration">Register</a></li>
+					<li><a class="loginBtn" id="loginBtn" href="login">Login</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -306,76 +303,7 @@ profileBtn {
 			</ul>
 			<div id="feedback" class="feedback"></div>
 		</div>
-		<div id="userProfile">
-			<div>
-				<div class="imgContainer">
-					<img id="userImage" class="userImage" alt=""
-						src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
-					<div>
-						<h4 id="userName">M.Ishaq Khan</h4>
-					</div>
-				</div>
-				<div class="aboutInfo">
-					<i style="color: black;" class="fa fa-info-circle"
-						aria-hidden="true"></i>
-					<p id="aboutUser">this is about user</p>
-
-				</div>
-				<div style="text-align: left; margin: 5px 10px; padding: 5px 10px">
-					<p style="">User verified with</p>
-					<div style="margin-top: -10px;">
-						<i class="fa fa-google verfied" aria-hidden="true"></i> <i
-							class="fa fa-phone-square verified" aria-hidden="true"></i>
-
-					</div>
-				</div>
-
 			</div>
-		</div>
-		<div class="profileEdit" id="profileEdit">
-			<p class="header" id="head">Edit Profile</p>
-			<hr>
-
-			<div class="edition">
-				<div class="info">
-					<p class="header">Basic information</p>
-
-					<div class="inputContainer" id="inputFirstName">
-						<input class="userInput" id="firstnameInput" type="text"
-							name="firstName" placeholder="firstName" value="">
-					</div>
-					<div class="inputContainer" id="inputLastName">
-						<input class="userInput" id="lastnameInput" type="text"
-							name="lastName" placeholder="lastName" value="">
-					</div>
-					<div class="inputContainer" id="inputAboutUser">
-						<input class="userInput" id="aboutInput" type="text"
-							name="aboutUser" placeholder="about User" value="">
-					</div>
-				</div>
-
-				<div class="info" id="contactInfo">
-					<p>Contact information</p>
-					<div class="inputContainer" id="inputAboutUser">
-						<input class="userInput" id="genderInput" type="text"
-							name="userGender" placeholder="User gendar" value="">
-					</div>
-					<div class="inputContainer" id="inputAboutUser">
-						<input class="userInput" id="emailInput" type="email" name="email"
-							placeholder="Email" value="">
-					</div>
-				</div>
-			</div>
-			<hr>
-			<div class="editionBtn">
-				<button id="discard" class="profile">Discard</button>
-				<button id="saveChanges" class="profile" onclick="updateProfile();">Save
-					Changes</button>
-
-			</div>
-		</div>
-
-	</div>
 
 	<script type="text/javascript">
 		function showProfile() {

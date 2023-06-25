@@ -179,31 +179,7 @@ function showSellingCategory() {
 
 }
 
-function likePost() {
-	var post = document.getElementById('btnForLike');
 
-	var dislike = '<i class="fa fa-heart-o like" aria-hidden="true"></i>'
-	var like = '<i class="fa fa-heart like" aria-hidden="true"></i>'
-	var post = document.getElementById('btnForLike');
-	if (post.innerHTML === like) {
-		post.innerHTML = dislike;
-	} else {
-		post.innerHTML = like;
-	}
-
-
-}
-function savePost() {
-	var unsave = '<i class="fa fa-bookmark-o save" aria-hidden="true"></i>'
-	var save = '<i class="fa fa-bookmark save" aria-hidden="true"></i>'
-	var post = document.getElementById('btnForSave');
-	if (post.innerHTML === unsave) {
-		post.innerHTML = save;
-	} else {
-		post.innerHTML = unsave;
-	}
-
-}
 function back() {
 	window.location.assign("homepage");
 }

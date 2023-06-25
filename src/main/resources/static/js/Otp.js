@@ -1,10 +1,8 @@
-function sendOtp(userId) {
-	alert(userId)
-	alert('click successsfull...');
+function sendOtp() {
 	var otp = $('#otp').val();
 	var request = {
 		"otp": otp,
-		"userId": userId,
+		"userId": localStorage.getItem('loginUser'),
 		"termsAndConditions": true
 	};
 	var myJSON = JSON.stringify(request);
@@ -19,11 +17,19 @@ function sendOtp(userId) {
 		success: function(data) {
 			if (data['message'] == 'Login Sucessfull') {
 				try {
+					localStorage.clear();
+					if (data.data.user_details.role == 0) {
+						localStorage.setItem('jsonToken', data.data.token);
+						localStorage.setItem('uId', data.data.user_details.id);
+						localStorage.setItem('adminRole', data.data.user_details.role);
+						window.location.assign('/dashboard');
+						return
+					}
 					//sessionStorage.setItem('jsonToken', JSON.stringify(data.data.token));
-					localStorage.setItem('jsonToken', JSON.stringify(data.data.token));
+					localStorage.setItem('jsonToken', data.data.token);
+					localStorage.setItem('uId', data.data.user_details.id);
 					console.log(localStorage.getItem('jsonToken'));
-					alert('success');	
-					window.location.assign('/homepage');
+					window.location.assign('/index');
 				} catch (error) {
 					// Handle the error in the success block
 					console.error('An error occurred in the success block:', error.message);

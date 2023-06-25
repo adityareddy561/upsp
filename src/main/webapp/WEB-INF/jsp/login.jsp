@@ -17,6 +17,41 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="js/login.js"></script>
+<style type="text/css">
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+	background-color: #fefefe;
+	margin: 20% auto;
+	padding: 30px;
+	border: 1px solid #888;
+	width: 50%;
+}
+
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+</style>
 </head>
 
 <body>
@@ -38,13 +73,30 @@
 				<label
 					style="font-size: 20px; padding-top: 20px; text-shadow: 0 0 2px rgb(135, 152, 153)">Password</label>
 				<input id="password" class="form-control" type="text"
-					name="password" placeholder="*************" required required>
+					name="password" placeholder="*************" required >
 			</div>
 
 			<div class="form-group" style="padding-top: 20px; text-align: center">
-				<button type="submit" class="btn btn-primary" onclick="login();"
+				<button type="button" class="btn btn-primary" onclick="login();"
 					style="color: black; background: darkgray; width: 100%; font-weight: bold">
 					Login</button>
+			</div>
+			<div style="text-align: center;">
+				<span style="cursor: pointer;" onclick="openForgotPasswordModal()">Forgot
+					Password</span>
+			</div>
+			<div id="forgotPasswordModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closeForgotPasswordModal()">&times;</span>
+					<!-- Place your forgot password design content here -->
+					<h2>Forgot Password</h2>
+					<p>Please Enter Your Email</p>
+					<form>
+						<input id="forgetPasswordEmail" type="email" placeholder="Email"
+							required>
+						<button onclick="forgetPassword()" type="submit">Send</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

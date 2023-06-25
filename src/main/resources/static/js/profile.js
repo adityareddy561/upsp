@@ -53,17 +53,16 @@ function closeChangePassword() {
 	modal.style.display = "none";
 }
 
-function updatePassword() {
-	alert('click ...')
-	//var uid = $('#id').val();
-	//var password = $('#newPassword').val();
-	alert("Enter")
-
+function updatePassword(id) {
+	if (localStorage.getItem('jsonToken') === null) {
+		window.location.assign('login');
+		return
+	}
+	var password = $('#newPassword').val();
 	var request = {
-		"id": 1,
-		"newPassword": '12345'
+		"id": id,
+		"newPassword": password
 	};
-	alert("success")
 	var myJSON = JSON.stringify(request);
 
 	$.ajax({
@@ -71,15 +70,16 @@ function updatePassword() {
 		contentType: "application/json",
 		url: "/api/change/password",
 		data: myJSON,
+		headers: { "Authorization": "Bearer " + localStorage.getItem('jsonToken') },
 		dataType: 'json',
 		cache: false,
 		timeout: 600000,
 		success: function(data) {
-			alert("updatePassword")
-			console.log('response recieve successfully...');
-			console.log(data);
+			if (data['statusCode'] == 401) {
+				window.location.assign('login');
+				return
+			}
 			if (data['message'] == 'Login Sucessfull') {
-				console.log('response successfully...');
 				window.location.assign('otp?userId=' + data.data);
 			} else {
 				console.log(data['message']);
@@ -91,4 +91,91 @@ function updatePassword() {
 			alert("Internal Server Error");
 		}
 	});
+}
+
+
+function loadUserById() {
+	if (localStorage.getItem('jsonToken') === null) {
+		window.location.assign('login');
+		return
+	}
+	$.ajax({
+		type: "GET",
+		contentType: "application/json",
+		url: "/api/user/get/" + localStorage.getItem('uId'),
+		headers: { "Authorization": "Bearer " + localStorage.getItem('jsonToken') },
+		dataType: 'json',
+		cache: false,
+		timeout: 600000,
+		success: function(data) {
+			if (data['statusCode'] == 401) {
+				window.location.assign('login');
+				return
+			}
+			$('#name').append(data.data.fullName);
+			$('#mail').append(data.data.email);
+			$('#mobile').append(data.data.mobileNumber);
+			$('#changepswd').append('<span style="cursor: pointer;" onclick="changePassword(' + data.data.id + ')">'
+				+ 'Change Password</span>');
+			$('#updtPswd').append('<button onclick="updatePassword(' + data.data.id + ')" style="padding: 5px 10px"'
+				+ 'type="submit">Send</button>');
+
+		},
+		error: function() {
+			document.getElementById('feedback').innerHTML = "No Products Available";
+		}
+	});
+}
+function editProfileById() {
+	if (localStorage.getItem('jsonToken') === null) {
+		window.location.assign('login');
+		return
+	}
+	var name = $('[placeholder="Enter your full name :"]').val();
+	var email = $('[placeholder="Enter your email :"]').val();
+	var contact = $('[placeholder="Enter your mobile number :"]').val();
+	var request = {
+		"fullName": name,
+		"email": email,
+		"mobileNumber": contact,
+		"id": Number(localStorage.getItem('uId'))
+
+	};
+	var myJSON = JSON.stringify(request);
+
+	$.ajax({
+		type: "POST",
+		contentType: "application/json",
+		url: "/api/user/update",
+		data: myJSON,
+		dataType: 'json',
+		headers: { "Authorization": "Bearer " + localStorage.getItem('jsonToken') },
+		cache: false,
+		timeout: 600000,
+		success: function(data) {
+			if (data['statusCode'] == 401) {
+				window.location.assign('login');
+				return
+			}
+			if (data['message'] == 'success') {
+				alert('Update User Successfully')
+			} else {
+				console.log(data['message']);
+				alert("something went wrong !")
+
+			}
+		},
+		error: function(e) {
+			alert("Internal Server Error");
+		}
+	});
+}
+function editProfile() {
+	var modal = document.getElementById("editProfile");
+	modal.style.display = "block";
+}
+
+function closeEditProfile() {
+	var modal = document.getElementById("editProfile");
+	modal.style.display = "none";
 }

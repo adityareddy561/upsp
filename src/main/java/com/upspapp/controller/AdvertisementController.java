@@ -50,6 +50,13 @@ public class AdvertisementController {
 		return builder.build();
 	}
 
+	@DeleteMapping("/delete/product/{id}")
+	public ApiResponseDto deleteProduct(@PathVariable(name = "id") long id) {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		advertisementService.deleteProductById(builder, id);
+		return builder.build();
+	}
+
 	@GetMapping("/getAll/productByQuery/{query}")
 	public ApiResponseDto getAllProducts(@PathVariable String query) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
