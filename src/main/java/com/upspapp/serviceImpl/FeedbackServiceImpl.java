@@ -12,6 +12,7 @@ import com.upspapp.customMapper.CustomMapper;
 import com.upspapp.modal.Feedback;
 import com.upspapp.repository.BuyerRepository;
 import com.upspapp.repository.FeedbackRepository;
+import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.FeedbackDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
 import com.upspapp.service.IFeedbackService;
@@ -26,7 +27,7 @@ public class FeedbackServiceImpl implements IFeedbackService {
 	private FeedbackRepository feedbackRepository;
 
 	@Autowired
-	private BuyerRepository buyerRepository;
+	private UserRepository buyerRepository;
 
 	@Override
 	public void addFeedback(ApiResponseDtoBuilder builder, FeedbackDto dto) {
@@ -34,7 +35,7 @@ public class FeedbackServiceImpl implements IFeedbackService {
 			Feedback feedback = mapper.feedbackDtoToFeedback(dto);
 			feedback.setCreatedAt(new Date());
 			feedbackRepository.save(feedback);
-			builder.withMessage(Constants.ADD_FEEDBACK).withData(feedback).withStatus(HttpStatus.OK);
+			builder.withMessage("success").withData(feedback).withStatus(HttpStatus.OK);
 		} else {
 			builder.withMessage(Constants.USER_NOT_FOUND).withStatus(HttpStatus.NOT_FOUND);
 		}
