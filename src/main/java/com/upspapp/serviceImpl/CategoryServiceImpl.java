@@ -11,10 +11,13 @@ import org.springframework.stereotype.Service;
 import com.upspapp.constants.Constants;
 import com.upspapp.customMapper.CustomMapper;
 import com.upspapp.modal.Category;
+import com.upspapp.modal.User;
 import com.upspapp.repository.CategoryRepository;
+import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.CategoryDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
 import com.upspapp.service.ICategoryService;
+import com.upspapp.utility.Utility;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService {
@@ -23,14 +26,21 @@ public class CategoryServiceImpl implements ICategoryService {
 	private CategoryRepository categoryRepository;
 
 	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
 	private CustomMapper customMapper;
 
 	@Override
 	public void addCategory(ApiResponseDtoBuilder builder, CategoryDto dto) {
+		User sessionUser = Utility.getSessionUser(userRepository);
+		if (sessionUser == null || sessionUser.getRole() != 0) {
+			builder.withMessage("UnAuthorize").withStatus(HttpStatus.UNAUTHORIZED);
+		}
 		Category category = customMapper.categoryDtoToCategory(dto);
 		category.setCreatedAt(new Date());
 		categoryRepository.save(category);
-		builder.withData(category).withMessage(Constants.ADD_CATEGORY).withStatus(HttpStatus.OK);
+		builder.withData(category).withMessage("success").withStatus(HttpStatus.OK);
 	}
 
 	@Override

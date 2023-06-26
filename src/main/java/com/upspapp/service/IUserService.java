@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.upspapp.modal.Buyer;
 import com.upspapp.modal.Seller;
+import com.upspapp.modal.User;
 import com.upspapp.requestDto.ChangePasswordDto;
 import com.upspapp.requestDto.UserDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
@@ -33,6 +34,7 @@ public interface IUserService {
 	void deleteBuyerById(ApiResponseDtoBuilder builder, long id);
 
 	void getBuyerById(ApiResponseDtoBuilder builder, long id);
+	void getUserById(ApiResponseDtoBuilder builder, long id);
 
 	void getAllBuyer(ApiResponseDtoBuilder builder);
 
@@ -41,4 +43,6 @@ public interface IUserService {
 	void sharePost(ApiResponseDtoBuilder apiResponseDtoBuilder, String email, long id);
 
 	void updatePasswordById(ApiResponseDtoBuilder builder, ChangePasswordDto changePasswordDto);
+
+	void updateUser(ApiResponseDtoBuilder builder, User user);
 }
