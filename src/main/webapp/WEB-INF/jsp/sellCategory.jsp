@@ -144,10 +144,11 @@ main {
 	font-weight: bold;
 	cursor: pointer;
 }
-.button2 {background-color: #008CBA;
-       color: white;
-       margin-left: 200px;
 
+.button2 {
+	background-color: #008CBA;
+	color: white;
+	margin-left: 200px;
 }
 
 .close:hover, .close:focus {
@@ -160,7 +161,6 @@ main {
 	padding: 3px 0px;
 }
 </style>
-<script src="js/custom.js" type="text/javascript"></script>
 </head>
 
 <body onload="getAllcategoriesWithSubCategory();">
@@ -183,8 +183,7 @@ main {
 		<main>
 
 			<div class="container">
-				<div class="accordion">
-				</div>
+				<div class="accordion"></div>
 				<!-- id accordion end -->
 
 			</div>
@@ -194,33 +193,42 @@ main {
 					<!-- Place your forgot password design content here -->
 					<h2>Add product</h2>
 					<form id="addPostForm" style="text-align: left;">
-					<div style="display: flex;">
-					<div>
-						<p>product name</p>
-						<input class="productInput" type="text"
-							placeholder="Enter product name" required>
-						<p>price</p>
-						<input class="productInput" type="text"
-							placeholder="Enter price" required>
+						<div style="display: flex;">
+							<div>
+								<p>product name</p>
+								<input class="productInput" type="text"
+									placeholder="Enter product name" required>
+								<p>price</p>
+								<input class="productInput" type="text"
+									placeholder="Enter price" required>
 							</div>
 							<div style="margin-left: 40px">
-							<p>Address</p>
-						<input class="productInput" type="text"
-							placeholder="Enter Address" required><br>
-						<p>description</p>
-						<input class="productInput" type="text"
-							placeholder="Enter description" required><br>
+								<p>Address</p>
+								<input class="productInput" type="text"
+									placeholder="Enter Address" required><br>
+								<p>description</p>
+								<input class="productInput" type="text"
+									placeholder="Enter description" required><br>
 							</div>
-							</div>
-						<button class="button button2">Add</button>
+						</div>
+						<button id="addItem" class="button button2" type="button">Add</button>
 					</form>
 				</div>
 			</div>
 		</main>
 	</div>
 	<!-- Script for Tabs. No Need to Edit This. -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 	<script>
-		function opneProduct(CatName,subCatId) {
+		let catName1 = "";
+		let subCatId1 = "";
+		function opneProduct(CatName, subCatId) {
+			catName1 = CatName;
+			subCatId1 = subCatId;
+			console.log(catName1 + "=" + subCatId1);
+			var addItemButton = document.getElementById("addItem");
+			//addItemButton.setAttribute("onclick", "addItem()");
 			var modal = document.getElementById("opneProduct");
 			modal.style.display = "block";
 		}
@@ -229,13 +237,55 @@ main {
 			var modal = document.getElementById("opneProduct");
 			modal.style.display = "none";
 		}
+		$('#addItem').click(function(event) {
+			addItem();
+		});
+		function addItem() {
+			alert('click ...')
+			var name = $('[placeholder="Enter product name"]').val();
+			var price = $('[placeholder="Enter price"]').val();
+			var Address = $('[placeholder="Enter Address"]').val();
+			var description = $('[placeholder="Enter description"]').val();
+			alert("Enter")
+
+			var request = {
+				"categoryName" : catName1,
+				"productName" : name,
+				"price" : price,
+				"description" : description,
+				"sellerId" : localStorage.getItem('uId'),
+				"address" : Address,
+				"subCategoryId" : subCatId1
+			};
+			alert("success")
+			var myJSON = JSON.stringify(request);
+
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : "/api/add/product",
+				data : myJSON,
+				dataType : 'json',
+				headers : {
+					"Authorization" : "Bearer "
+							+ localStorage.getItem('jsonToken').replace(/"/g,
+									'')
+				},
+				cache : false,
+				timeout : 600000,
+				success : function(data) {
+					alert(" Post Added Successfully")
+				},
+				error : function(e) {
+					alert("Internal Server Error");
+				}
+			});
+		}
 	</script>
 
 
 	<!-- jQuery -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-
-
+	<script src="js/custom.js" type="text/javascript"></script>
 </body>
 </html>

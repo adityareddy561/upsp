@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.upspapp.constants.Constants;
 import com.upspapp.modal.Category;
 import com.upspapp.modal.SubCategory;
-import com.upspapp.modal.User;
 import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.CategoryDto;
 import com.upspapp.requestDto.SubCategoryDto;
@@ -21,7 +20,6 @@ import com.upspapp.responseDto.ApiResponseDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
 import com.upspapp.service.ICategoryService;
 import com.upspapp.service.ISubCategoryService;
-import com.upspapp.utility.Utility;
 
 import io.swagger.annotations.Api;
 
@@ -35,7 +33,7 @@ public class CategoryController {
 
 	@Autowired
 	private ISubCategoryService subCategoryService;
-	
+
 	@Autowired
 	private UserRepository userRepository;
 

@@ -35,7 +35,7 @@ public class AdvertisementController {
 		advertisementService.addProduct(builder, advertisementDto);
 		return builder.build();
 	}
-	
+
 	@GetMapping(value = "/get/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto getProduct(@PathVariable(name = "id") long id) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
@@ -49,7 +49,7 @@ public class AdvertisementController {
 		advertisementService.updateProductById(builder, advertisement);
 		return builder.build();
 	}
-	
+
 	@DeleteMapping("/delete/product/{id}")
 	public ApiResponseDto deleteProduct(@PathVariable(name = "id") long id) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
@@ -60,39 +60,40 @@ public class AdvertisementController {
 	@GetMapping("/getAll/productByQuery/{query}")
 	public ApiResponseDto getAllProducts(@PathVariable String query) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
-		advertisementService.getAllProducts(builder,query);
+		advertisementService.getAllProducts(builder, query);
 		return builder.build();
 	}
-	
+
 	@GetMapping("/getAll/product")
 	public ApiResponseDto getAllProduct() {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
 		advertisementService.getAllProduct(builder);
 		return builder.build();
 	}
-	
+
 	@GetMapping("/getAll/product/{sellerId}")
 	public ApiResponseDto getAllProduct(@PathVariable(name = "sellerId") long sellerId) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
-		advertisementService.getAllProductBySellerId(builder,sellerId);
+		advertisementService.getAllProductBySellerId(builder, sellerId);
 		return builder.build();
 	}
 
 	@PostMapping(value = "/add/like", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto addLike(@RequestBody PostLikeDto dto) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
-		advertisementService.addLike(dto, builder);
+		advertisementService.likeAndDislike(dto, builder);
 		return builder.build();
 	}
 
-	@DeleteMapping(value = "/delete/like", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ApiResponseDto disLike(@RequestBody PostLikeDto dto) {
+	@PostMapping(value = "/save/product", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto savePost(@RequestBody PostSaveDto dto) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
-		advertisementService.deleteLike(dto, builder);
+		advertisementService.saveAndUnSavePost(dto, builder);
 		return builder.build();
 	}
 
-	@GetMapping(value = "/search/Product/{byOrder}",  produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@GetMapping(value = "/search/Product/{byOrder}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto getAllProductbyOrder(@PathVariable(name = "byOrder") int byOrder) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
 		advertisementService.getAllProductbyOrder(byOrder, builder);

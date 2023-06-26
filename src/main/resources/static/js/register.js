@@ -1,5 +1,4 @@
 function userRegister() {
-	alert('click successsfull...');
 	var email = $('#email').val();
 	var password = $('#password').val();
 	var name = $('#userName').val();
@@ -24,20 +23,14 @@ function userRegister() {
 		cache: false,
 		timeout: 600000,
 		success: function(data) {
-			alert("Enter");
-			console.log(data);
 			try {
 				if (data['message'] == 'success') {
-					alert('response successfully...');
 					window.location.assign('/homepage');
 				} else {
-					console.log(data['message']);
 					alert("User name and Password is wrong !")
 
 				}
 			} catch (error) {
-				// Handle the error in the success block
-				console.error('An error occurred in the success block:', error.message);
 				alert("Error occurred in success block");
 			}
 		},
