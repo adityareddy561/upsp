@@ -7,7 +7,7 @@ public class AdvertisementDto {
 	private String description;
 	private Long sellerId;
 	private Long subCategoryId;
-	private Long address;
+	private String address;
 	private String image;
 
 	public String getImage() {
@@ -18,11 +18,11 @@ public class AdvertisementDto {
 		this.image = image;
 	}
 
-	public Long getAddress() {
+	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(Long address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 
