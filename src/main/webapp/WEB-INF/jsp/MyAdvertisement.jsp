@@ -12,6 +12,11 @@
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		<link rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script type="text/javascript"
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQ-3cnEgApWSRMuneCN2Ekpgwuk9d9UJM&libraries=places"></script>
+		<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+			integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+			crossorigin="anonymous"></script>
 		<script src="js/custom.js"></script>
 		<link rel="stylesheet" href="css/style.css">
 		<style>
@@ -52,13 +57,13 @@
 	</head>
 	<body onload="getAllCategories();getAllPostsByLoginUserId();">
 		<jsp:include page="navbar.jsp" />
-			<nav class="navbar navbar-inverse">
+			<!-- <nav class="navbar navbar-inverse">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav" id="categories">
 						<li class="active"><a href="#">All Categories</a></li>
 					</ul>
 				</div>
-			</nav>
+			</nav> -->
 			<div class="text-center">
 				<h1>My Advertisements</h1>
 			</div>
