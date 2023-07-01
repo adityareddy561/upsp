@@ -1,5 +1,7 @@
 package com.upspapp.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.upspapp.modal.User;
@@ -17,6 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	public boolean existsByPassword(String oldPassword);
 
 	public User findByPassword(String oldPassword);
+
+	public List<User> findByRole(int i);
 
 
 }
