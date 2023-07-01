@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.upspapp.constants.Constants;
 import com.upspapp.customMapper.CustomMapper;
@@ -19,6 +20,7 @@ import com.upspapp.modal.Report;
 import com.upspapp.repository.AdvertisementRepository;
 import com.upspapp.repository.BuyerRepository;
 import com.upspapp.repository.ReportRepository;
+import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.ReportDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
 
@@ -34,7 +36,7 @@ public class ReportServiceImplTest {
 	private ReportRepository reportRepository;
 
 	@Mock
-	private BuyerRepository buyerRepository;
+	private UserRepository userRepository;
 
 	@Mock
 	private AdvertisementRepository advertisementRepository;
@@ -53,11 +55,11 @@ public class ReportServiceImplTest {
 		report.setId(1L);
 		report.setCreatedAt(new Date());
 		when(advertisementRepository.existsById(reportDto.getProductId())).thenReturn(true);
-		when(buyerRepository.existsById(reportDto.getBuyerId())).thenReturn(true);
+		when(userRepository.existsById(reportDto.getBuyerId())).thenReturn(true);
 		when(mapper.reportDtoToReport(reportDto)).thenReturn(report);
 		when(reportRepository.save(report)).thenReturn(report);
 		reportServiceImpl.addReport(apiResponseDtoBuilder, reportDto);
-		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.ADD_REPORT));
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
 	}
 
 	@Test

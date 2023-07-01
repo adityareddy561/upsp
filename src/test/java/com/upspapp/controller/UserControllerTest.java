@@ -21,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.upspapp.UPSPApplication;
 import com.upspapp.modal.Buyer;
 import com.upspapp.modal.Seller;
+import com.upspapp.modal.User;
 import com.upspapp.requestDto.ChangePasswordDto;
 import com.upspapp.requestDto.UserDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
@@ -43,7 +44,7 @@ public class UserControllerTest {
 
 		UserDto userRequestDto = new UserDto();
 		userRequestDto.setFullName("Test Admin");
-		userRequestDto.setEmail("testadmin@gmail.com");
+		userRequestDto.setEmail("anonymousUser");
 		userRequestDto.setMobileNumber("9999999999");
 		userRequestDto.setPassword("123456");
 		String url = URL + port + "/api/admin/add";
@@ -56,16 +57,17 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void addSeller() throws Exception {
+	public void addUser() throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		UserDto userRequestDto = new UserDto();
-		userRequestDto.setFullName("Test Seller");
-		userRequestDto.setEmail("testseller@gmail.com");
+		userRequestDto.setFullName("Test user");
+		userRequestDto.setEmail("testUser@gmail.com");
 		userRequestDto.setMobileNumber("9999999");
 		userRequestDto.setPassword("123456");
-		String url = URL + port + "/api/seller/add";
+		userRequestDto.setUserType("user");
+		String url = URL + port + "/api/user/add";
 		HttpEntity<UserDto> request = new HttpEntity<>(userRequestDto, headers);
 
 		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.postForEntity(url, request,
@@ -128,25 +130,6 @@ public class UserControllerTest {
 
 	}
 
-	@Test
-	public void addBuyer() throws Exception {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-
-		UserDto userRequestDto = new UserDto();
-		userRequestDto.setFullName("Test Buyer");
-		userRequestDto.setEmail("testbuyer@gmail.com");
-		userRequestDto.setMobileNumber("999911999");
-		userRequestDto.setPassword("123456");
-		String url = URL + port + "/api/buyer/add";
-		HttpEntity<UserDto> request = new HttpEntity<>(userRequestDto, headers);
-
-		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.postForEntity(url, request,
-				ApiResponseDtoBuilder.class);
-
-		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-
-	}
 
 	@Test
 	public void updateBuyer() throws Exception {
@@ -189,6 +172,44 @@ public class UserControllerTest {
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
+	
+	@Test
+	public void getUserById() throws Exception {
+		String url = URL + port + "/api/user/get/" + 1;
+
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.getForEntity(url,
+				ApiResponseDtoBuilder.class);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	
+
+	@Test
+	public void updateUser() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		User user = new User();
+		user.setFullName("Test Buyer");
+		user.setEmail("testbuyer@gmail.com");
+		user.setMobileNumber("8888881111");
+		user.setPassword("11111");
+		user.setId(2L);
+		user.setCreatedAt(new Date());
+		user.setUpdatedAt(new Date());
+		user.setRole(2);
+		user.setActive(true);
+
+		String url = URL + port + "/api/user/update";
+		HttpEntity<User> request = new HttpEntity<>(user, headers);
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.postForEntity(url, request,
+				ApiResponseDtoBuilder.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	
+	
 
 	@Test
 	public void getAllBuyer() throws Exception {
@@ -219,7 +240,7 @@ public class UserControllerTest {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		String email = "test123@test.com";
-		String url = URL + port + "/api/referFriend/" + 1 + "/" + email;
+		String url = URL + port + "/api/referFriend/" + 1000l + "/" + email;
 
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		String urlTemplate = UriComponentsBuilder.fromHttpUrl(url).encode().toUriString();
@@ -234,7 +255,7 @@ public class UserControllerTest {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		String email = "test123@test.com";
-		String url = URL + port + "/api/referFriend/" + 1 + "/" + email;
+		String url = URL + port + "/api/sharePost/" + 1000l + "/" + email+"/"+1l;
 
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		String urlTemplate = UriComponentsBuilder.fromHttpUrl(url).encode().toUriString();
@@ -252,8 +273,8 @@ public class UserControllerTest {
 		String url = URL + port + "/api/user/forgotPassword/" + email;
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		String urlTemplate = UriComponentsBuilder.fromHttpUrl(url).encode().toUriString();
-		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.postForEntity(urlTemplate, entity,
-				ApiResponseDtoBuilder.class);
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.getForEntity(urlTemplate,
+				ApiResponseDtoBuilder.class,entity);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 }
