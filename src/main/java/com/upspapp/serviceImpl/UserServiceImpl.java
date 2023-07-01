@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -191,13 +193,12 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	}
 
 	@Override
-	public void addFriend(ApiResponseDtoBuilder apiResponseDtoBuilder, String email, long id) {
-		if (sellerRepository.existsById(id) || buyerRepository.existsById(id)) {
-			emailService.sendEmail(email, "Refer Friend", "Url Of UPSP-App", "UPSP-App.com", null, null);
-			apiResponseDtoBuilder.withMessage("Refer your Friend Successfully").withStatus(HttpStatus.OK);
-		} else {
-			apiResponseDtoBuilder.withMessage(Constants.USER_NOT_FOUND).withStatus(HttpStatus.OK);
-		}
+	public void addFriend(ApiResponseDtoBuilder apiResponseDtoBuilder, String email) {
+		String link = "http://localhost:8080/homepage";
+		emailService.sendEmail(email, "one of your friends refers you this website",
+				"<html><body><a href=\"" + link + "\">Click here to visit the homepage</a></body></html>", "upsp", null,
+				null);
+		apiResponseDtoBuilder.withMessage("success").withStatus(HttpStatus.OK);
 	}
 
 	@Override
@@ -296,11 +297,13 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	}
 
 	@Override
-	public void sharePost(ApiResponseDtoBuilder apiResponseDtoBuilder, String email, long id) {
-		if (sellerRepository.existsById(id) || buyerRepository.existsById(id)) {
-			emailService.sendEmail(email, "Share Post With Friends", "Url Of Product", "UPSP-App-product.com", null,
-					null);
-			apiResponseDtoBuilder.withMessage("Post Share Successfully...").withStatus(HttpStatus.OK);
+	public void sharePost(ApiResponseDtoBuilder apiResponseDtoBuilder, String email, long id, long pid) {
+		if (repository.existsById(id) || repository.existsById(id)) {
+			new Thread(() -> {
+				emailService.sendEmail(email, "Share Post With Friends", "http://localhost:8080/home",
+						"UPSP-App-product.com", null, null);
+			}).start();
+			apiResponseDtoBuilder.withMessage("success").withStatus(HttpStatus.OK);
 		} else {
 			apiResponseDtoBuilder.withMessage(Constants.USER_NOT_FOUND).withStatus(HttpStatus.OK);
 		}
@@ -325,13 +328,30 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 			userObj.setEmail(user.getEmail());
 			userObj.setFullName(user.getFullName());
 			userObj.setMobileNumber(user.getMobileNumber());
-			//String newPasswordEncodedString = bCryptPasswordEncoder.encode(user.getPassword());
-			//userObj.setPassword(newPasswordEncodedString);
+			// String newPasswordEncodedString =
+			// bCryptPasswordEncoder.encode(user.getPassword());
+			// userObj.setPassword(newPasswordEncodedString);
 			userObj.setUpdatedAt(new Date());
 			repository.save(userObj);
 			builder.withMessage("success").withStatus(HttpStatus.OK).withData(userObj);
 		} else {
 			builder.withMessage(Constants.USER_NOT_FOUND).withStatus(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@Override
+	public void getAllRoleBase(ApiResponseDtoBuilder builder, HttpServletRequest request) {
+		User currentUser = repository.findByEmail(request.getSession().getAttribute("username").toString());
+		if(currentUser.getRole()==1) {
+			List<User> listOfBuyer = repository.findByRole(2);
+			builder.withMessage("success").withStatus(HttpStatus.OK).withData(listOfBuyer);
+			return ;
+		}else if(currentUser.getRole()==2) {
+			List<User> listOfBuyer = repository.findByRole(1);
+			builder.withMessage("success").withStatus(HttpStatus.OK).withData(listOfBuyer);
+			return ;
+		}
+		builder.withMessage("not found").withStatus(HttpStatus.OK);
+		
 	}
 }

@@ -3,6 +3,7 @@ package com.upspapp.serviceImpl;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Service;
 import com.upspapp.constants.Constants;
 import com.upspapp.customMapper.CustomMapper;
 import com.upspapp.modal.Advertisement;
+import com.upspapp.modal.Offer;
 import com.upspapp.modal.PostLike;
 import com.upspapp.modal.PostSave;
 import com.upspapp.modal.User;
 import com.upspapp.repository.AdvertisementRepository;
 import com.upspapp.repository.LikeRepository;
+import com.upspapp.repository.OfferRepository;
 import com.upspapp.repository.SaveRepository;
 import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.AdvertisementDto;
@@ -39,6 +42,9 @@ public class AdvertisementServiceimpl implements IAdvertisementService {
 
 	@Autowired
 	private LikeRepository likeRepository;
+
+	@Autowired
+	private OfferRepository offerRepository;
 
 	@Autowired
 	private CustomMapper mapper;
@@ -89,7 +95,7 @@ public class AdvertisementServiceimpl implements IAdvertisementService {
 		Optional<Advertisement> advertisement = advertisementRepository.findById(id);
 		if (advertisement.isPresent()) {
 			advertisementRepository.deleteById(advertisement.get().getId());
-			builder.withMessage(Constants.DELETE_PRODUCT).withStatus(HttpStatus.OK);
+			builder.withMessage("success").withStatus(HttpStatus.OK);
 		} else {
 			builder.withStatus(HttpStatus.NOT_FOUND).withMessage(Constants.PRODUCT_NOT_FOUND);
 		}
@@ -98,7 +104,14 @@ public class AdvertisementServiceimpl implements IAdvertisementService {
 	@Override
 	public void getAllProduct(ApiResponseDtoBuilder builder) {
 		List<Advertisement> listOfProduct = advertisementRepository.findAll();
-		builder.withData(listOfProduct).withMessage("success").withStatus(HttpStatus.OK);
+		List<Advertisement> collectionOfProducts = listOfProduct.stream().map(Product -> {
+			if (offerRepository.existsByProductId(Product.getId())) {
+				Offer dis = offerRepository.findByProductId(Product.getId());
+				Product.setDiscountPrice(Product.getPrice()-(Product.getPrice() * dis.getOffer()) / 100);
+			}
+			return Product;
+		}).collect(Collectors.toList());
+		builder.withData(collectionOfProducts).withMessage("success").withStatus(HttpStatus.OK);
 	}
 
 	@Override
@@ -140,6 +153,19 @@ public class AdvertisementServiceimpl implements IAdvertisementService {
 	}
 
 	@Override
+	public void getAllProductbyLocation(String location, ApiResponseDtoBuilder builder) {
+		List<Advertisement> listOfProduct = advertisementRepository.findByAddressContaining(location);
+		List<Advertisement> collectionOfProducts = listOfProduct.stream().map(Product -> {
+			if (offerRepository.existsByProductId(Product.getId())) {
+				Offer dis = offerRepository.findByProductId(Product.getId());
+				Product.setDiscountPrice(Product.getPrice()-(Product.getPrice() * dis.getOffer()) / 100);
+			}
+			return Product;
+		}).collect(Collectors.toList());
+		builder.withMessage("success").withStatus(HttpStatus.OK).withData(collectionOfProducts);
+	}
+
+	@Override
 	public void getAllProductBySellerId(ApiResponseDtoBuilder builder, long sellerId) {
 		if (advertisementRepository.existsBySellerId(sellerId)) {
 			List<Advertisement> listOfProduct = advertisementRepository.findAllBySellerId(sellerId);
@@ -151,8 +177,40 @@ public class AdvertisementServiceimpl implements IAdvertisementService {
 
 	@Override
 	public void getAllProducts(ApiResponseDtoBuilder builder, String query) {
-		List<Advertisement> listOfCategory = advertisementRepository.findByCategoryNameContaining(query);
-		builder.withData(listOfCategory).withStatus(HttpStatus.OK).withMessage("success");
+		List<Advertisement> listOfProduct = advertisementRepository.findByCategoryNameContaining(query);
+		List<Advertisement> collectionOfProducts = listOfProduct.stream().map(Product -> {
+			if (offerRepository.existsByProductId(Product.getId())) {
+				Offer dis = offerRepository.findByProductId(Product.getId());
+				Product.setDiscountPrice(Product.getPrice() - (Product.getPrice() * dis.getOffer()) / 100);
+			}
+			return Product;
+		}).collect(Collectors.toList());
+		builder.withData(collectionOfProducts).withStatus(HttpStatus.OK).withMessage("success");
 
+	}
+
+	@Override
+	public void getAllProductsWithLikeAndSaveStatus(ApiResponseDtoBuilder builder) {
+		User sessionUser = Utility.getSessionUser(repository);
+		if (sessionUser != null) {
+			List<Advertisement> listOfProducts = advertisementRepository.findAll();
+			List<Advertisement> collectionOfProducts = listOfProducts.stream().map(Product -> {
+				if (likeRepository.existsByBuyerIdAndProductId(sessionUser.getId(), Product.getId())) {
+					Product.setLikeStatus(true);
+				}
+				if (saveRepository.existsByBuyerIdAndProductId(sessionUser.getId(), Product.getId())) {
+					Product.setSaveStatus(true);
+				}
+				if (offerRepository.existsByProductId(Product.getId())) {
+					Offer dis = offerRepository.findByProductId(Product.getId());
+					Product.setDiscountPrice(Product.getPrice() - (Product.getPrice() * dis.getOffer()) / 100);
+				}
+
+				return Product;
+			}).collect(Collectors.toList());
+			builder.withData(collectionOfProducts).withStatus(HttpStatus.OK).withMessage("success");
+			return;
+		}
+		builder.withStatus(HttpStatus.UNAUTHORIZED).withMessage("UnAuthorized");
 	}
 }

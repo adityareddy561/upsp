@@ -24,3 +24,12 @@ function closeFeedback() {
 	var modal = document.getElementById("feedbackModal");
 	modal.style.display = "none";
 }
+function openshare() {
+	var modal = document.getElementById("sharemodel");
+	modal.style.display = "block";
+}
+
+function closeShare() {
+	var modal = document.getElementById("sharemodel");
+	modal.style.display = "none";
+}

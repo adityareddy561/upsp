@@ -3,15 +3,29 @@ package com.upspapp.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class IndexController {
 
+	@GetMapping("/home")
+	public String forHome() {
+		return "home";
+	}
+
 	@GetMapping("/login")
 	public String forLogin() {
 		return "login";
+	}
+
+	@GetMapping("/myAdvertisements")
+	public String forMyAds() {
+		return "MyAdvertisement";
+	}
+
+	@GetMapping("/location")
+	public String location() {
+		return "glocation";
 	}
 
 	@GetMapping("/registration")
@@ -24,17 +38,12 @@ public class IndexController {
 		return "dashboard";
 	}
 
-	@GetMapping("/homepage")
-	public String forHome() {
-		return "homepage";
-	}
-
 	@GetMapping("/index")
 	public String forIndex() {
 		return "homepage2";
 	}
 
-	@GetMapping("/homepage/index")
+	@GetMapping("/home/index")
 	public String forHome(@RequestParam Long userId, ModelMap model) {
 		System.out.println(userId);
 		model.addAttribute("userId", userId);
@@ -79,5 +88,45 @@ public class IndexController {
 	@GetMapping("/dynamic")
 	public String dyn() {
 		return "dynamicTable";
+	}
+
+	@GetMapping("/listCategory")
+	public String listCategory() {
+		return "listCategory";
+	}
+
+	@GetMapping("/addCategory")
+	public String addCategory() {
+		return "addCategory";
+	}
+
+	@GetMapping("/addSubCategory")
+	public String addSubCategory() {
+		return "addSubCategory";
+	}
+
+	@GetMapping("/listSubCategory")
+	public String listSubCategory() {
+		return "listSubCategory";
+	}
+
+	@GetMapping("/listFeedback")
+	public String listFeedback() {
+		return "listFeedback";
+	}
+
+	@GetMapping("/feedback")
+	public String feedback() {
+		return "feedback";
+	}
+
+	@GetMapping("/chat")
+	public String chat() {
+		return "chat";
+	}
+
+	@GetMapping("/listReport")
+	public String listReport() {
+		return "listReport";
 	}
 }

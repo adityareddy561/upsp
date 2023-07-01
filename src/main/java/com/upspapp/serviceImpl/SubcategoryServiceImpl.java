@@ -20,6 +20,7 @@ import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.SubCategoryDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
 import com.upspapp.responseDto.CategoriesAndSubcategories;
+import com.upspapp.responseDto.SubCategoryResponseDto;
 import com.upspapp.service.ISubCategoryService;
 import com.upspapp.utility.Utility;
 
@@ -88,7 +89,16 @@ public class SubcategoryServiceImpl implements ISubCategoryService {
 	@Override
 	public void getAllSubCategory(ApiResponseDtoBuilder builder) {
 		List<SubCategory> listOfSubCategory = subCategoryRepository.findAll();
-		builder.withData(listOfSubCategory).withStatus(HttpStatus.OK).withMessage("success");
+		List<SubCategoryResponseDto> dataList = new ArrayList<>();
+		for (SubCategory subCategory : listOfSubCategory) {
+			SubCategoryResponseDto subCategoryResponseDto = mapper.subCategoryToSubCategoryResponseDto(subCategory);
+			Optional<Category> category = categoryRepository.findById(subCategory.getCategoryId());
+			if (category.isPresent()) {
+				subCategoryResponseDto.setCategoryName(category.get().getCategoryName());
+				dataList.add(subCategoryResponseDto);
+			}
+		}
+		builder.withData(dataList).withStatus(HttpStatus.OK).withMessage("success");
 	}
 
 	@Override

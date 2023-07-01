@@ -1,5 +1,7 @@
 package com.upspapp.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -121,19 +123,18 @@ public class UserController {
 		return builder.build();
 	}
 
-	@PostMapping(value = "/referFriend/{id}/{email}")
-	public ApiResponseDto addFriend(@PathVariable(required = true) long id,
-			@PathVariable(required = true) String email) {
+	@PostMapping(value = "/referFriend/{email}")
+	public ApiResponseDto addFriend(@PathVariable(required = true) String email) {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
-		userService.addFriend(apiResponseDtoBuilder, email, id);
+		userService.addFriend(apiResponseDtoBuilder, email);
 		return apiResponseDtoBuilder.build();
 	}
 
-	@PostMapping(value = "/sharePost/{id}/{email}")
-	public ApiResponseDto sharePost(@PathVariable(required = true) long id,
-			@PathVariable(required = true) String email) {
+	@PostMapping(value = "/sharePost/{id}/{email}/{pid}")
+	public ApiResponseDto sharePost(@PathVariable(required = true) long id, @PathVariable(required = true) String email,
+			@PathVariable(required = true) long pid) {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
-		userService.sharePost(apiResponseDtoBuilder, email, id);
+		userService.sharePost(apiResponseDtoBuilder, email, id, pid);
 		return apiResponseDtoBuilder.build();
 	}
 
@@ -142,12 +143,19 @@ public class UserController {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
 		userService.updateUser(builder, user);
 		return builder.build();
-	}	
+	}
 
 	@GetMapping(value = "/user/forgotPassword/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto forgotPassword(@PathVariable(required = true) String email) {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
 		userService.forgotPassword(apiResponseDtoBuilder, email);
 		return apiResponseDtoBuilder.build();
+	}
+	
+	@GetMapping(value = "/userbyrole/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto getAllRoleBase(HttpServletRequest request) {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		userService.getAllRoleBase(builder,request);
+		return builder.build();
 	}
 }

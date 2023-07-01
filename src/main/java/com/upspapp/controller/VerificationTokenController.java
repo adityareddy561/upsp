@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,21 +24,20 @@ import com.upspapp.service.IVerificationTokenService;
 @RestController
 @RequestMapping(Constants.API_BASE_URL)
 public class VerificationTokenController {
-	
+
 	@Autowired
 	private IVerificationTokenService verificationTokenService;
-	
+
 	@GetMapping("/registrationConfirm")
-	public String confirmRegistration( @RequestParam("token") final String token) throws IOException {
+	public String confirmRegistration(@RequestParam("token") final String token) throws IOException {
 		return verificationTokenService.validateToken(token);
-		
+
 	}
-	
 
 	@PostMapping("/otpVerification")
-	public ApiResponseDto login(@RequestBody OtpVerificationDto loginUser) {
+	public ApiResponseDto login(@RequestBody OtpVerificationDto loginUser, HttpServletRequest httpServletRequest) {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
-		verificationTokenService.otpVerification(loginUser, apiResponseDtoBuilder);
+		verificationTokenService.otpVerification(loginUser, apiResponseDtoBuilder, httpServletRequest);
 		return apiResponseDtoBuilder.build();
 	}
 

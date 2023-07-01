@@ -68,11 +68,12 @@ public class FileController {
 	 * @return
 	 */
 
-	@GetMapping("getFile/{type}/{file}")
-	public ResponseEntity<byte[]> getFile(@PathVariable("type") String type, @PathVariable("file") String file) {
+	@GetMapping("getFile/{file}")
+	public ResponseEntity<byte[]> getFile(@PathVariable("file") String file) {
 		byte[] image = null;
 		try {
 			image = Files.readAllBytes(Paths.get(environment.getProperty("file.upload-dir") + File.separator + file));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

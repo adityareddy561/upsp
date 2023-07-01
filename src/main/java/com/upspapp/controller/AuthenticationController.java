@@ -73,7 +73,8 @@ public class AuthenticationController {
 
 		VerificationToken verificationToken = new VerificationToken();
 		verificationToken.setCreatedAt(new Date());
-		verificationToken.setOtp(generateOTP());
+		String otp = generateOTP();
+		verificationToken.setOtp(otp);
 		verificationToken.setUserId(checkUser.getId());
 		verificationToken.setExpiryDate(new Date(new Date().getTime()));
 		verificationTokenRepository.save(verificationToken);

@@ -1,47 +1,32 @@
-<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="js/profile.js"></script>
+	<head>
+		<title>UPSP</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="js/sellingCategory.js"></script>
+		<script src="js/custom.js"></script>
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/profile.js"></script>
 
-<style type="text/css">
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-/* Assigning all the same properties to the body */
-body {
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	background-color: rgb(0, 0, 0);
-	align-items: center;
-}
-
-.container {
-	width: 20em;
-	background-color: rgb(255, 255, 255);
-	overflow: hidden;
-	border-radius: 1em;
-	text-align: center;
-	font-family: 'Open Sans Condensed', sans-serif;
-	font-size: 1em;
-}
+		<style type="text/css">
 
 .user-image {
 	padding: 3em 0;
-	background-image: linear-gradient(70deg, #61A1DD, #0083FD);
 }
 
 .user-image img {
-	width: 7em;
-	height: 7em;
+	width: 250px;
+	height: 250px;
 	border-radius: 50%;
 	box-shadow: 0 0.6em 1.8em;
 	object-fit: cover;
@@ -65,18 +50,6 @@ body {
 	display: flex;
 	justify-content: center;
 	margin: 1.5em 0;
-}
-
-a {
-	text-decoration: none;
-	color: #565656;
-	transition: all 0.3s;
-	font-size: 2em;
-	margin-right: 1.2em;
-}
-
-a:last-child {
-	margin: 0;
 }
 
 .insta:hover {
@@ -111,13 +84,28 @@ h3 {
 	text-decoration: none;
 	color: white;
 	text-transform: capitalize;
-	width: 90%;
-	background-image: linear-gradient(60deg, #0083FD, #61A1DD);
+	width: 100%;
+	background-image: linear-gradient(60deg, #000000, #02070b);
 	font-size: 1.2em;
 	padding: 6px;
 	border-radius: 5em;
 	overflow: hidden;
 	border-radius: 5em;
+}
+
+.submit {
+	text-align: center;
+	display: inline-block;
+	position: relative;
+	text-decoration: none;
+	color: white;
+	text-transform: capitalize;
+	background-image: linear-gradient(60deg, #bd3434, #ae212f);
+	font-size: 1.2em;
+	padding: 6px;
+	border-radius: 5em;
+	overflow: hidden;
+	width: 200px;
 }
 
 .modal {
@@ -160,71 +148,88 @@ h3 {
 	padding: 3px 0px;
 }
 </style>
-<%
-String userId = request.getParameter("userId");
-%>
-</head>
-<body onload="loadUserById()">
-	<div class="container">
-		<div class="user-image">
-			<img
-				src="https://sialifehospital.com/wp-content/uploads/2021/04/testimonial-1.png"
-				alt="this image contains user-image">
-		</div>
-		<h3 id="name"></h3>
-		<h3 id="mail"></h3>
-		<h3 id="mobile"></h3>
-		<div class="content">
-			<div class="links">
-				<a class="facebook" href="" target="_blank" title="GFG_facebook">
-					<i class="fab fa-facebook"></i>
-				</a> <a class="git" href="" title="GFG_github" target="_blank"> <i
-					class="fab fa-github-square"></i>
-				</a> <a class="linkedin" href="" title="GFG_linkedin" target="_blank">
-					<i class="fab fa-linkedin"></i>
-				</a> <a class="insta" href="" target="_blank" title="GFG_instagram">
-					<i class="fab fa-instagram-square"></i>
-				</a>
-			</div>
-			<button onclick="editProfile()" class="editProfile">Edit
-				Profile</button>
-			<div id="editProfile" class="modal">
-				<div class="modal-content">
-					<span class="close" onclick="closeEditProfile()">&times;</span>
-					<!-- Place your forgot password design content here -->
-					<h2>-: Edit Profile :-</h2>
-					<form style="text-align: left;">
-						<p>Enter Name</p>
-						<input id="name" class="editProfileInput" type="text"
-							placeholder="Enter your full name :" required>
-						<p>Enter Email</p>
-						<input id="email" class="editProfileInput" type="email"
-							placeholder="Enter your email :" required>
-						<p>Enter mobile number</p>
-						<input id="mobileNumber" class=editProfileInput type="text"
-							placeholder="Enter your mobile number :" required><br>
-						<button style="padding: 5px 10px; width: 20%" type="button"onclick="editProfileById();">Update</button>
-					</form>
+	</head>
+	<body onload="loadUserById()">
+		<jsp:include page="navbar.jsp" />
+			<div class="container">
+				<div class="text-center">
+					<h1>Profile</h1>
+				</div>
+				<div class="user-image">
+					<div class="row">
+						<div class="col-sm-3">
+							<img
+								src="https://sialifehospital.com/wp-content/uploads/2021/04/testimonial-1.png"
+								alt="this image contains user-image">
+							<!-- <button onclick="editProfile()" class="editProfile">Edit
+								Profile</button> -->
+							<br>
+							<br>
+							<div id="changepswd"></div>
+							<br>
+							<button onclick="logout()" class="editProfile">Logout</button>
+						</div>
+						<div class="col-sm-8">
+							<br>
+							<br>
+							<br>
+
+							<form style="text-align: left;">
+								<p>Enter Name</p>
+								<input id="name-input" class="form-control editProfileInput" type="text"
+									placeholder="Enter your full name :" required>
+								<p>Enter Email</p>
+								<input id="email" class="form-control editProfileInput" type="email"
+									placeholder="Enter your email :" required>
+								<p>Enter mobile number</p>
+								<input id="mobileNumber" class=form-control editProfileInput type="text"
+									placeholder="Enter your mobile number :" required><br>
+								<div class="text-right">
+									<button class="submit" type="button"
+										onclick="editProfileById();">Update</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="content">
+					<div id="editProfile" class="modal">
+						<div class="modal-content">
+							<span class="close" onclick="closeEditProfile()">&times;</span>
+							<!-- Place your forgot password design content here -->
+							<h2>-: Edit Profile :-</h2>
+							<form style="text-align: left;">
+								<p>Enter Name</p>
+								<input id="name-input" class="form-control editProfileInput" type="text"
+									placeholder="Enter your full name :" required>
+								<br>
+								<p>Enter Email</p>
+								<input id="email" class="form-control editProfileInput" type="email"
+									placeholder="Enter your email :" required>
+								<br>
+								<p>Enter mobile number</p>
+								<input id="mobileNumber" class=form-control editProfileInput type="text"
+									placeholder="Enter your mobile number :" required><br>
+								<button style="padding: 5px 10px; width: 20%" type="button"
+									onclick="editProfileById();">Update</button>
+							</form>
+						</div>
+					</div>
+					<div id="changePassword" class="modal">
+						<div class="modal-content">
+							<span class="close" onclick="closeChangePassword()">&times;</span>
+							<!-- Place your forgot password design content here -->
+							<h2>Change Password</h2>
+							<form style="text-align: left;">
+								<p>Enter New Password</p>
+								<input id="newPassword" class="form-control changePasswordInput"
+									type="password" placeholder="Enter Password" required>
+								<div id="updtPswd" class="text-right"></div>
+
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div id="changepswd" style="text-align: center; margin: 10px 0px;">
-
-			</div>
-			<div id="changePassword" class="modal">
-				<div class="modal-content">
-					<span class="close" onclick="closeChangePassword()">&times;</span>
-					<!-- Place your forgot password design content here -->
-					<h2>Change Password</h2>
-					<form style="text-align: left;">
-						<p>Enter New Password</p>
-						<input id="newPassword" class="changePasswordInput"
-							type="password" placeholder="Enter Password" required>
-						<div id="updtPswd"></div>
-
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
-</html>
+		</body>
+	</html>

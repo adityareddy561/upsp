@@ -1,23 +1,24 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>User Login</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="js/login.js"></script>
-<style type="text/css">
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<title>User Login</title>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<!--===============================================================================================-->
+			<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+			<link rel="stylesheet"
+				href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+			<script
+				src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+			<script
+				src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+			<script src="js/login.js"></script>
+			<link rel="stylesheet" href="css/style.css">
+			<style type="text/css">
 .modal {
 	display: none;
 	position: fixed;
@@ -51,56 +52,79 @@
 	text-decoration: none;
 	cursor: pointer;
 }
+
+.submit {
+	text-align: center;
+	display: inline-block;
+	position: relative;
+	text-decoration: none;
+	color: white;
+	text-transform: capitalize;
+	background-image: linear-gradient(60deg, #bd3434, #ae212f);
+	font-size: 1.2em;
+	padding: 6px;
+	border-radius: 5em;
+	overflow: hidden;
+	width: 200px;
+}
 </style>
-</head>
+		</head>
 
-<body>
-	<div class="row" style="width: 95%">
-		<div class="col-sm-8">
-			<img src="jsp/upsp-logo.png" style="width: 100%; max-height: 680px;">
-		</div>
-		<div class="col-sm-4">
-			<div style="text-align: center; padding-top: 100px;">
-				<h1 style="text-shadow: 0 0 2px red">Sign in</h1>
-			</div>
-			<div class="form-group">
-				<label
-					style="font-size: 20px; padding-top: 20px; text-shadow: 0 0 2px rgb(135, 152, 153)">User
-					Name</label> <input id="username" class="form-control" type="text"
-					name="username" placeholder="Enter Your User Name..." required>
-			</div>
-			<div class="form-group">
-				<label
-					style="font-size: 20px; padding-top: 20px; text-shadow: 0 0 2px rgb(135, 152, 153)">Password</label>
-				<input id="password" class="form-control" type="text"
-					name="password" placeholder="*************" required >
-			</div>
+		<body>
+			<div class="row" style="width: 95%">
+				<div class="col-sm-8">
+					<img src="images/upsp-logo.png" style="width: 100%; max-height: 680px;">
+				</div>
+				<div class="col-sm-4">
+					<div style="text-align: center; padding-top: 100px;">
+						<h1 style="text-shadow: 0 0 2px red">Sign in</h1>
+					</div>
+					<div class="form-group">
+						<label
+							style="font-size: 20px; padding-top: 20px; text-shadow: 0 0 2px rgb(135,
+							152, 153)">User
+							Name</label> <input id="username" class="form-control" type="text"
+							name="username" placeholder="Enter Your User Name..." required>
+					</div>
+					<div class="form-group">
+						<label
+							style="font-size: 20px; padding-top: 20px; text-shadow: 0 0 2px rgb(135,
+							152, 153)">Password</label>
+						<input id="password" class="form-control" type="password"
+							name="password" placeholder="*************" required>
+					</div>
 
-			<div class="form-group" style="padding-top: 20px; text-align: center">
-				<button type="button" class="btn btn-primary" onclick="login();"
-					style="color: black; background: darkgray; width: 100%; font-weight: bold">
-					Login</button>
-			</div>
-			<div style="text-align: center;">
-				<span style="cursor: pointer;" onclick="openForgotPasswordModal()">Forgot
-					Password</span>
-			</div>
-			<div id="forgotPasswordModal" class="modal">
-				<div class="modal-content">
-					<span class="close" onclick="closeForgotPasswordModal()">&times;</span>
-					<!-- Place your forgot password design content here -->
-					<h2>Forgot Password</h2>
-					<p>Please Enter Your Email</p>
-					<form>
-						<input id="forgetPasswordEmail" type="email" placeholder="Email"
-							required>
-						<button onclick="forgetPassword()" type="submit">Send</button>
-					</form>
+					<div class="form-group" style="padding-top: 20px; text-align: center">
+						<button type="button" class="submit" onclick="login();"
+							style="color: white; background: black; width: 100%; font-weight:
+							bold">
+							Login</button>
+					</div>
+					<div style="text-align: center;">
+						<span style="cursor: pointer;" onclick="openForgotPasswordModal()">Forgot
+							Password</span>
+					</div>
+					<div id="forgotPasswordModal" class="modal">
+						<div class="modal-content">
+							<span class="close" id="forgot-password-close"
+								onclick="closeForgotPasswordModal()">&times;</span>
+							<!-- Place your forgot password design content here -->
+							<h2>Forgot Password</h2>
+							<p>Please Enter Your Email</p>
+							<form>
+								<input class="form-control" id="forgetPasswordEmail" type="email"
+									placeholder="Email"
+									required>
+								<br>
+								<div class="text-right">
+									<button class="submit" onclick="forgetPassword()" type="button">Send</button>
+								</div>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 
-</body>
+		</body>
 
-</html>
+	</html>

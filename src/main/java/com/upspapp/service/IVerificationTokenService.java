@@ -2,6 +2,8 @@ package com.upspapp.service;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.upspapp.modal.User;
 import com.upspapp.requestDto.OtpVerificationDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
@@ -16,7 +18,7 @@ public interface IVerificationTokenService {
 	
 	String validateToken(String token);
 
-	void otpVerification(OtpVerificationDto loginUser, ApiResponseDtoBuilder apiResponseDtoBuilder);
+	void otpVerification(OtpVerificationDto loginUser, ApiResponseDtoBuilder apiResponseDtoBuilder, HttpServletRequest httpServletRequest);
 
 	void sendOtp(String otp, User user, Date expiryDate);
 
