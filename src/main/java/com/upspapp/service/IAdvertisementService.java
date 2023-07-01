@@ -31,4 +31,8 @@ public interface IAdvertisementService {
 
 	void getAllProductBySellerId(ApiResponseDtoBuilder builder, long sellerId);
 
+	void getAllProductbyLocation(String location, ApiResponseDtoBuilder builder);
+
+	void getAllProductsWithLikeAndSaveStatus(ApiResponseDtoBuilder builder);
+
 }

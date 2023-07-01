@@ -52,7 +52,7 @@ public class FileServiceImpl implements IFileService {
 	public String uploadFile(MultipartFile file, String fileName, ApiResponseDtoBuilder apiResponseDtoBuilder) {
 		String fileUrl = storeFile(file, fileName);
 		apiResponseDtoBuilder.withMessage(ResponseMessage.FILE_UPLOAD_SUCCESSFULLY).withStatus(HttpStatus.OK)
-				.withData(fileUrl);
+				.withData(fileUrl.replace("/", ""));
 		return fileUrl;
 	}
 
