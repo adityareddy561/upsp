@@ -23,111 +23,111 @@
 			src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-		<style type="text/css">
-.button-91 {
-	color: #fff;
-	padding: 15px 25px;
-	background-color: #38D2D2;
-	background-image: radial-gradient(93% 87% at 87% 89%, rgba(0, 0, 0, 0.23)
-		0%, transparent 86.18%),
-		radial-gradient(66% 66% at 26% 20%, rgba(255, 255, 255, 0.55) 0%,
-		rgba(255, 255, 255, 0) 69.79%, rgba(255, 255, 255, 0) 100%);
-	box-shadow: inset -3px -3px 9px rgba(255, 255, 255, 0.25), inset 0px 3px
-		9px rgba(255, 255, 255, 0.3), inset 0px 1px 1px
-		rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3),
-		inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px
-		rgba(0, 0, 0, 0.2);
-	border-radius: 14px;
-	font-weight: bold;
-	font-size: 16px;
-	border: 0;
-	user-select: none;
-	-webkit-user-select: none;
-	touch-action: manipulation;
-	cursor: pointer;
-}
-
-.brandLogo {
-	color: #002f34;
-	font-size: 20px;
-	font-weight: 900;
-}
-
-#input1 {
-	padding: 7px;
-	border-radius: 6px;
-	font-size: 16px;
-	background: #fbfbfb;
-	border: 2px solid transparent;
-	height: 36px;
-	box-shadow: 0 0 0 1px #dddddd, 0 2px 4px 0 rgb(0 0 0/ 7%), 0 1px 1.5px 0
-		rgb(0 0 0/ 5%); : focus { border : 2px solid #000;
-	border-radius: 4px;
-}
-
-}
-.brand {
-	text-align: center;
-	cursor: pointer;
-}
-
-#logoDesc {
-	color: black;
-}
-
-.button-3 {
-	appearance: none;
-	background-color: #000000;
-	border: 1px solid rgba(27, 31, 35, .15);
-	border-radius: 6px;
-	box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
-	box-sizing: border-box;
-	color: #fff !important;
-	cursor: pointer;
-	display: inline-block;
-	font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
-		sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-	font-size: 14px;
-	font-weight: 600;
-	line-height: 20px;
-	padding: 6px 16px;
-	position: relative;
-	text-align: center;
-	text-decoration: none;
-	user-select: none;
-	-webkit-user-select: none;
-	touch-action: manipulation;
-	vertical-align: middle;
-	white-space: nowrap;
-	width: 100%;
-}
-
-.button-3:focus:not(:focus-visible):not(.focus-visible) {
-	box-shadow: none;
-	outline: none;
-}
-
-.button-3:hover {
-	background-color: #000000;
-}
-
-.button-3:focus {
-	box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
-	outline: none;
-}
-
-.button-3:disabled {
-	background-color: #000000;
-	border-color: rgba(27, 31, 35, .1);
-	color: rgba(255, 255, 255, .8);
-	cursor: default;
-}
-
-.button-3:active {
-	background-color: #000000;
-	box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
-}
-</style>
+			<style type="text/css">
+				.button-91 {
+					color: #fff;
+					padding: 15px 25px;
+					background-color: #000000;
+					background-image: radial-gradient(93% 87% at 87% 89%, rgba(0, 0, 0, 0.23)
+						0%, transparent 86.18%),
+						radial-gradient(66% 66% at 26% 20%, rgba(255, 255, 255, 0.55) 0%,
+						rgba(255, 255, 255, 0) 69.79%, rgba(255, 255, 255, 0) 100%);
+					box-shadow: inset -3px -3px 9px rgba(255, 255, 255, 0.25), inset 0px 3px
+						9px rgba(255, 255, 255, 0.3), inset 0px 1px 1px
+						rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3),
+						inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px
+						rgba(0, 0, 0, 0.2);
+					border-radius: 14px;
+					font-weight: bold;
+					font-size: 16px;
+					border: 0;
+					user-select: none;
+					-webkit-user-select: none;
+					touch-action: manipulation;
+					cursor: pointer;
+				}
+				
+				.brandLogo {
+					color: #002f34;
+					font-size: 20px;
+					font-weight: 900;
+				}
+				
+				#input1 {
+					padding: 7px;
+					border-radius: 6px;
+					font-size: 16px;
+					background: #fbfbfb;
+					border: 2px solid transparent;
+					height: 36px;
+					box-shadow: 0 0 0 1px #dddddd, 0 2px 4px 0 rgb(0 0 0/ 7%), 0 1px 1.5px 0
+						rgb(0 0 0/ 5%); : focus { border : 2px solid #000;
+					border-radius: 4px;
+				}
+				
+				}
+				.brand {
+					text-align: center;
+					cursor: pointer;
+				}
+				
+				#logoDesc {
+					color: black;
+				}
+				
+				.button-3 {
+					appearance: none;
+					background-color: #000000;
+					border: 1px solid rgba(27, 31, 35, .15);
+					border-radius: 6px;
+					box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+					box-sizing: border-box;
+					color: #fff !important;
+					cursor: pointer;
+					display: inline-block;
+					font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+						sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+					font-size: 14px;
+					font-weight: 600;
+					line-height: 20px;
+					padding: 6px 16px;
+					position: relative;
+					text-align: center;
+					text-decoration: none;
+					user-select: none;
+					-webkit-user-select: none;
+					touch-action: manipulation;
+					vertical-align: middle;
+					white-space: nowrap;
+					width: 100%;
+				}
+				
+				.button-3:focus:not(:focus-visible):not(.focus-visible) {
+					box-shadow: none;
+					outline: none;
+				}
+				
+				.button-3:hover {
+					background-color: #000000;
+				}
+				
+				.button-3:focus {
+					box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+					outline: none;
+				}
+				
+				.button-3:disabled {
+					background-color: #000000;
+					border-color: rgba(27, 31, 35, .1);
+					color: rgba(255, 255, 255, .8);
+					cursor: default;
+				}
+				
+				.button-3:active {
+					background-color: #000000;
+					box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+				}
+				</style>
 	</head>
 
 	<body onload="getAllCategoriesForAdmin();">
@@ -516,11 +516,21 @@
 					<div class="row">
 						<div class="col-sm-3">
 						</div>
-						<div class="col-sm-6" style="margin:0 auto;
+						<div class="col-sm-6" style=" margin:0 auto;
 							width:500px; text-align:center;">
 							<br>
 							<br>
-							<h1>Welcome to UPSP</h1>
+							<form id="myForm">
+								<!-- Form fields and inputs go here -->
+								<label>Name : </label>
+								<input type="text" placeholder="Name" id="input1"
+									class="categoryName2"><br>
+								<div class="text-center">
+									<input class="button-91"
+										type="submit" value="Add" onclick="addCategoryByAdmin();"
+										style="margin-top: 30px;">
+								</div>
+							</form>
 							<br>
 						</div>
 						<div class="col-sm-3">
