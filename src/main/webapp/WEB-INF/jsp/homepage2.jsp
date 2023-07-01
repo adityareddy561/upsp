@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<style type="text/css">
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<style type="text/css">
 .mainNavbar {
 	position: fixed;
 	top: 0;
 }
-
+.original-price {
+      text-decoration: line-through;
+      color: red;
+    }
+    .discounted-price {
+      color: green;
+    }
 .nav-wrapper {
 	background-color: rgb(239, 241, 243);
 	display: flex;
@@ -227,87 +233,87 @@ profileBtn {
 	color: black;
 }
 </style>
+			<script type="text/javascript"
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQ-3cnEgApWSRMuneCN2Ekpgwuk9d9UJM&libraries=places"></script>
+			<link rel="stylesheet" href="css/profile.css">
 
-<link rel="stylesheet" href="css/profile.css">
+			<link rel="stylesheet"
+				href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+			<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+			<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+				integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+				crossorigin="anonymous"></script>
+			<link rel="stylesheet"
+				href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+			<script
+				src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+			<script src="js/register.js" type="text/javascript"></script>
+			<script src="js/custom.js" type="text/javascript"></script>
+			<script src="js/sellingCategory.js" type="text/javascript"></script>
+			<script src="js/profile.js" type="text/javascript"></script>
+			<script src="js/updateProfile.js" type="text/javascript"></script>
 
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"
-	integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
-	crossorigin="anonymous"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="js/register.js" type="text/javascript"></script>
-<script src="js/custom.js" type="text/javascript"></script>
-<script src="js/sellingCategory.js" type="text/javascript"></script>
-<script src="js/profile.js" type="text/javascript"></script>
-<script src="js/updateProfile.js" type="text/javascript"></script>
-
-<meta charset="UTF-8">
-<title>Home page</title>
-</head>
-<body onload="getAllCategories();getAllPosts();">
-	<div>
-		<div class="">
-			<nav class="mainNavbar">
-				<div class="nav-wrapper">
-					<div class="sub-nav">
-						<div class="brand">
-							<a href="#" class="brandLogo">U P S P</a>
-							<p id="logoDesc">Quick Sell Used Item</p>
-						</div>
-						<div class="locationSearch">
-							<div class="browsLocation">
-								<i class="fa fa-search" aria-hidden="true"></i> <input
-									id="location" class="location" list="browsers" name="myBrowser"
-									placeholder="Search for location" />
-								<datalist id="browsers">
-									<option value="Chrome">
-								</datalist>
+			<meta charset="UTF-8">
+			<title>Home page</title>
+		</head>
+		<body onload="getAllCategories();getAllPostsWithLikeAndSaveStatus();">
+			<div>
+				<div class="">
+					<nav class="mainNavbar">
+						<div class="nav-wrapper">
+							<div class="sub-nav">
+								<div class="brand">
+									<a href="#" class="brandLogo">U P S P</a>
+									<p id="logoDesc">Quick Sell Used Item</p>
+								</div>
+								<div class="locationSearch">
+									<div class="browsLocation">
+										<i class="fa fa-search" aria-hidden="true"></i> <input
+											id="searchTextField" class="productInput" type="text"
+											placeholder="Enter a location" autocomplete="on" runat="server"
+											onblur="findProductsByLocation()" />
+									</div>
+								</div>
 							</div>
+							<div class="searching">
+								<input id="searchItem" type="text"
+									placeholder="find cars mobiles and more.">
+								<div class="forSearch">
+									<i id="seacrhingIcon" class="fa fa-search" aria-hidden="true"
+										onclick="searchByQuery();"></i>
+								</div>
+							</div>
+							<ul id="" class="right hide-on-med-and-down">
+								<li><a class="loginBtn" id="loginBtn" href="myAdvertisements">My
+										Ads</a></li>
+								<li><a class="loginBtn" id="loginBtn" href="checkProfile">Me</a></li>
+								<li><a class="registerBtn" href="#"
+										onclick="showSellingCategory();">Sell</a></li>
+								<li><a class="registerBtn" href="#" onclick="logout();">Logout</a></li>
+							</ul>
 						</div>
-					</div>
-					<div class="searching">
-						<input id="searchItem" type="text"
-							placeholder="find cars mobiles and more.">
-						<div class="forSearch">
-							<i id="seacrhingIcon" class="fa fa-search" aria-hidden="true"
-								onclick="searchByQuery();"></i>
+					</nav>
+
+				</div>
+
+				<div class="postAdds" id="postAdds">
+					<nav class="subNavbar">
+						<div class="allCategory">
+							<a>AllCategory <i class="fa fa-chevron-down" aria-hidden="true"></i>
+							</a>
 						</div>
-					</div>
-					<ul id="" class="right hide-on-med-and-down">
-						<li><a class="loginBtn" id="loginBtn" href="checkProfile">Me</a></li>
-						<li><a class="registerBtn" href="#"
-							onclick="showSellingCategory();">Sell</a></li>
-						<li><a class="registerBtn" href="#" onclick="logout();">Logout</a></li>
+						<ul id="categories"></ul>
+					</nav>
+					<ul class="itemList">
+
 					</ul>
+					<div id="feedback" class="feedback"></div>
 				</div>
-			</nav>
 
-		</div>
+			</div>
 
-		<div class="postAdds" id="postAdds">
-			<nav class="subNavbar">
-				<div class="allCategory">
-					<a>AllCategory <i class="fa fa-chevron-down" aria-hidden="true"></i>
-					</a>
-				</div>
-				<ul id="categories"></ul>
-			</nav>
-			<ul class="itemList">
-
-			</ul>
-			<div id="feedback" class="feedback"></div>
-		</div>
-
-	</div>
-
-	<script type="text/javascript">
+			<script type="text/javascript">
 		function showProfile() {
 			console.log('hello..');
 			//document.getElementById('dropD').style.display="block";
@@ -327,5 +333,5 @@ profileBtn {
 			}
 		}
 	</script>
-</body>
-</html>
+		</body>
+	</html>

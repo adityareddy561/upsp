@@ -14,6 +14,7 @@ import com.upspapp.modal.Rating;
 import com.upspapp.modal.Report;
 import com.upspapp.modal.PostSave;
 import com.upspapp.modal.Seller;
+import com.upspapp.modal.SiteFeedback;
 import com.upspapp.modal.SubCategory;
 import com.upspapp.modal.User;
 import com.upspapp.requestDto.AdvertisementDto;
@@ -24,6 +25,7 @@ import com.upspapp.requestDto.PostLikeDto;
 import com.upspapp.requestDto.OfferDto;
 import com.upspapp.requestDto.RatingDto;
 import com.upspapp.requestDto.ReportDto;
+import com.upspapp.requestDto.SiteFeedbackDto;
 import com.upspapp.requestDto.PostSaveDto;
 import com.upspapp.requestDto.SubCategoryDto;
 import com.upspapp.requestDto.UserDto;
@@ -39,8 +41,6 @@ public interface CustomMapper {
 	Category categoryDtoToCategory(CategoryDto dto);
 
 	SubCategory subCategoryDtoToSubCategory(SubCategoryDto dto);
-
-	Report reportDtoToReport(ReportDto dto);
 
 	Feedback feedbackDtoToFeedback(FeedbackDto dto);
 
@@ -58,5 +58,6 @@ public interface CustomMapper {
 
 	SubCategoryResponseDto subCategoryToSubCategoryResponseDto(SubCategory subCategory);
 
+	Message messageDtoToMessage(MessageDto dto);
 
 }
