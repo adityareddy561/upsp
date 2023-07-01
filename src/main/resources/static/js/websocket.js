@@ -18,7 +18,7 @@
         function sendMessage() {
             var message = document.getElementById("message").value;
             //stompClient.send("/app/chat", {}, message+"#@#"+receiverId);
-            stompClient.send("/app/chat", {"Authorization" : "Bearer "+localStorage.getItem("jsonToken")}, JSON.stringify( {'message':message,'receiver':receiverId,'sender':localStorage.getItem("user_details")}));
+            stompClient.send("/app/chat", {"Authorization" : "Bearer "+localStorage.getItem("jsonToken")}, JSON.stringify( {'message':message,'receiver':localStorage.getItem("seller"),'sender':localStorage.getItem("uId")}));
             console.log("Sent message: " + message);
         }
 
@@ -30,7 +30,7 @@
               BOT_NAME=data.data[item].sender;
               msgText=data.data[item].message;
               time=data.data[item].createdAt;
-              if(BOT_NAME==receiverId){
+              if(BOT_NAME==localStorage.getItem("seller")){
                 appendMessage(BOT_NAME, BOT_IMG, "left", msgText,time);
               }else{
                 appendMessage(BOT_NAME, BOT_IMG, "right", msgText,time);

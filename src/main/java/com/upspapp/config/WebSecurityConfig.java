@@ -26,7 +26,7 @@ public class WebSecurityConfig {
 			"/checkProfile", "/api/user/forgotPassword/", "/api/otpVerification", "/home", "/dashboard",
 			"/api/getAll/category", "/location", "/sellingCategory", "/api/**", "/addCategory", "/addSubCategory",
 			"/postDetails", "/myAdvertisements", "/images/**", "/listCategory", "/listSubCategory", "/listFeedback",
-			"/feedback", "/chat", "/listReport","/api/add/site/feedback" };
+			"/feedback", "/chat", "/listReport", "/api/add/site/feedback", "/ws/**" };
 
 	@Resource(name = "userService")
 	private UserDetailsService userDetailsService;

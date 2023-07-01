@@ -40,3 +40,7 @@ mvn spring-boot:run
 
 - Open application in browser : http://localhost:8080
 
+#Live Demo
+http://24.144.96.49:8080/home
+http://24.144.96.49:8080/login
+
