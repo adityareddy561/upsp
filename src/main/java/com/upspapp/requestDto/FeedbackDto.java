@@ -1,9 +1,34 @@
 package com.upspapp.requestDto;
 
 public class FeedbackDto {
-	private String query;
-	private Long buyerId;
+	private String review;
+	private int rating;
+	private Long userId;
 	private Long productId;
+
+	public String getReview() {
+		return review;
+	}
+
+	public void setReview(String review) {
+		this.review = review;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
 	public Long getProductId() {
 		return productId;
@@ -11,22 +36,6 @@ public class FeedbackDto {
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
-	}
-
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public Long getBuyerId() {
-		return buyerId;
-	}
-
-	public void setBuyerId(Long buyerId) {
-		this.buyerId = buyerId;
 	}
 
 }
