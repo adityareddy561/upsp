@@ -12,7 +12,7 @@ function getAllCategories() {
 				for (var item in data.data) {
 					$('#categories')
 						.append(
-							'<li><a onclick=searchByCategory("' + data.data[item].categoryName + '")>' + data.data[item].categoryName + '</a></li>'
+							'<li><a>' + data.data[item].categoryName + '</a></li>'
 						);
 				}
 			} else {
@@ -43,7 +43,6 @@ function getAllPosts() {
 		cache: false,
 		timeout: 600000,
 		success: function (data) {
-			$('.itemList').html('');
 			if (data.data.length > 0) {
 				for (var item in data.data) {
 					var itemlist = $('.itemList');
@@ -167,7 +166,6 @@ function getProductById() {
 			$('#price').html("$" + data.data.price);
 			$('#address').html(data.data.address);
 			$('#description').html(data.data.description);
-			$("#chat-button").html('<a class="btn btn-xs mb-1 btn-warning" onclick="setSellerId(' + data.data.sellerId + ')">Chat With Seller</a>');
 		},
 		error: function () {
 			document.getElementById('feedback').innerHTML = "No Products Available";
@@ -710,73 +708,4 @@ function addSiteFeedback() {
 			alert("Internal Server Error");
 		}
 	});
-}
-
-$(document).ready(function () {
-	if (localStorage.getItem('jsonToken') !== null) {
-		$("#link1").css('display', 'block');
-		$("#link2").css('display', 'block');
-		$("#link3").css('display', 'block');
-		$("#link4").css('display', 'block');
-		$("#link-signin").css('display', 'none');
-		$("#link-signup").css('display', 'none');
-	} else {
-		$("#link1").css('display', 'none');
-		$("#link2").css('display', 'none');
-		$("#link3").css('display', 'none');
-		$("#link4").css('display', 'none');
-		$("#link-signin").css('display', 'block');
-		$("#link-signup").css('display', 'block');
-	}
-});
-
-function searchByCategory(category) {
-	if (category !== "all") {
-		$.ajax({
-			type: "GET",
-			contentType: "application/json",
-			url: "/api/getAll/productByQuery/" + category,
-			dataType: 'json',
-			cache: false,
-			timeout: 600000,
-			success: function (data) {
-				var itemlist = $('.itemList');
-				itemlist.html('');
-				if (data.data.length > 0) {
-					for (var item in data.data) {
-						var htmlString = "";
-						htmlString += '<div class="col-sm-2">';
-						htmlString += '<div class="card">';
-						htmlString += '<a onClick="getProductDetailById(' + data.data[item].id + ');"><img src="http://localhost:8181/api/file/getFile/' + encodeURIComponent(data.data[item].image) + '" alt="Denim Jeans"></a>';
-						htmlString += '<h3>' + data.data[item].productName + '</h3>';
-						if (data.data[item].discountPrice != 0) {
-							htmlString += '<p class="price original-price">$' + data.data[item].price + '</p>';
-							htmlString += '<p class="price discounted-price">' + data.data[item].discountPrice + '</p>';
-						} else {
-							htmlString += '<p class="price discounted-price">$' + data.data[item].price + '</p>';
-						}
-						htmlString += '<div class="likeBtn row">';
-						htmlString += '<div class="col-sm-6" id="' + 'like' + data.data[item].id + '" onclick="likeAndDislike(' + data.data[item].id + ');">';
-						htmlString += '<i class="fa fa-heart-o like" aria-hidden="true"></i>';
-						htmlString += '</div>';
-						htmlString += '<div class="col-sm-5 text-right" id="' + 'save' + data.data[item].id + '" onclick="saveAndUnsavePost(' + data.data[item].id + ');">';
-						htmlString += '<i class="fa fa-bookmark-o save" aria-hidden="true"></i>';
-						htmlString += '</div>';
-						htmlString += '</div>';
-						htmlString += '</div>';
-						htmlString += '</div>';
-						itemlist.append(htmlString);
-
-					}
-				} else {
-					document.getElementById('feedback').innerHTML = "No Products Available";
-				}
-			},
-			error: function () {
-				document.getElementById('feedback').innerHTML = "No Products Available";
-			}
-		});
-	} else {
-		getAllPosts();
-	}
 }
