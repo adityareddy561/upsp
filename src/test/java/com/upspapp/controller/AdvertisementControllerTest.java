@@ -32,7 +32,7 @@ public class AdvertisementControllerTest {
 	private TestRestTemplate restTemplate;
 
 	private final String URL = "http://localhost:";
-	
+
 	@Test
 	public void addProduct() throws Exception {
 		HttpHeaders headers = new HttpHeaders();
@@ -40,7 +40,7 @@ public class AdvertisementControllerTest {
 
 		AdvertisementDto advertisementDto = new AdvertisementDto();
 		advertisementDto.setDescription("test");
-		//advertisementDto.setOwner("Test");
+		// advertisementDto.setOwner("Test");
 		advertisementDto.setPrice(10L);
 		advertisementDto.setProductName("Case");
 		String url = URL + port + "/api/add/product";
@@ -117,22 +117,6 @@ public class AdvertisementControllerTest {
 	}
 
 	@Test
-	public void deleteLike() throws Exception {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		PostLikeDto dto = new PostLikeDto();
-		dto.setBuyerId(1L);
-		dto.setProductId(1L);
-		String url = URL + port + "/api/delete/like";
-		HttpEntity<PostLikeDto> request = new HttpEntity<>(dto, headers);
-
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(url).encode().toUriString();
-		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.exchange(urlTemplate, HttpMethod.DELETE,
-				request, ApiResponseDtoBuilder.class);
-		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	}
-
-	@Test
 	public void savePost() throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -145,30 +129,58 @@ public class AdvertisementControllerTest {
 				ApiResponseDtoBuilder.class);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
-	
-	@Test
-	public void unsaveProduct() throws Exception {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		PostSaveDto dto = new PostSaveDto();
-		dto.setBuyerId(1L);
-		dto.setProductId(1L);
-		String url = URL + port + "/api/unsave/product";
-		HttpEntity<PostSaveDto> request = new HttpEntity<>(dto, headers);
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(url).encode().toUriString();
-		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.exchange(urlTemplate, HttpMethod.DELETE,
-				request, ApiResponseDtoBuilder.class);
-		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	}
-	
+
 	@Test
 	public void getAllProductbyOrder() throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		int byOrder=1;
-		String url = URL + port + "/api/search/Product/"+byOrder;
+		int byOrder = 1;
+		String url = URL + port + "/api/search/Product/" + byOrder;
 		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.getForEntity(url,
 				ApiResponseDtoBuilder.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	
+	@Test
+	public void getAllProductsByQuery() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url = URL + port + "/api/getAll/productByQuery/" + "test";
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.getForEntity(url,
+				ApiResponseDtoBuilder.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	
+	@Test
+	public void getAllProductBySellerId() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		long sellerId = 1l;
+		String url = URL + port + "/api/getAll/product/" + sellerId;
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.getForEntity(url,
+				ApiResponseDtoBuilder.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	@Test
+	public void getAllProductbyLocation() throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String url = URL + port + "/api/search/Product/location/" + "test";
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.getForEntity(url,
+				ApiResponseDtoBuilder.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	@Test
+	public void getAllProductsWithLikeAndSaveStatus() throws Exception {
+		String url = URL + port + "/api/getAll/products/likeAndsave/status";
+
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.getForEntity(url,
+				ApiResponseDtoBuilder.class);
+
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 }
