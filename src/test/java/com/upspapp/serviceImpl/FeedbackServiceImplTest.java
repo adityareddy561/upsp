@@ -18,6 +18,7 @@ import com.upspapp.customMapper.CustomMapper;
 import com.upspapp.modal.Feedback;
 import com.upspapp.repository.BuyerRepository;
 import com.upspapp.repository.FeedbackRepository;
+import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.FeedbackDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
 
@@ -34,7 +35,7 @@ public class FeedbackServiceImplTest {
 	private FeedbackRepository feedbackRepository;
 
 	@Mock
-	private BuyerRepository buyerRepository;
+	private UserRepository userRepository;
 	
 	@Test
 	public void addFeedback() {
@@ -47,10 +48,10 @@ public class FeedbackServiceImplTest {
 		feedback.setQuery("test");
 		feedback.setCreatedAt(new Date());
 		feedback.setId(1L);
-		when(buyerRepository.existsById(feedbackDto.getBuyerId())).thenReturn(true);
+		when(userRepository.existsById(feedbackDto.getBuyerId())).thenReturn(true);
 		when(mapper.feedbackDtoToFeedback(feedbackDto)).thenReturn(feedback);
 		feedbackServiceImpl.addFeedback(apiResponseDtoBuilder, feedbackDto);
-		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.ADD_FEEDBACK));
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
 	}
 
 	@Test
