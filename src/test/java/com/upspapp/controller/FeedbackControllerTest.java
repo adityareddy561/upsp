@@ -34,8 +34,8 @@ public class FeedbackControllerTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		FeedbackDto feedbackDto = new FeedbackDto();
-		feedbackDto.setBuyerId(1L);
-		feedbackDto.setQuery("Test");
+		feedbackDto.setUserId(1L);
+		feedbackDto.setReview("Test");
 		String url = URL + port + "/api/add/feedback";
 		HttpEntity<FeedbackDto> request = new HttpEntity<>(feedbackDto, headers);
 

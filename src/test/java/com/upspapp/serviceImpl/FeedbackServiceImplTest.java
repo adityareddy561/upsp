@@ -36,19 +36,19 @@ public class FeedbackServiceImplTest {
 
 	@Mock
 	private UserRepository userRepository;
-	
+
 	@Test
 	public void addFeedback() {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
 		FeedbackDto feedbackDto = new FeedbackDto();
-		feedbackDto.setBuyerId(1L);
-		feedbackDto.setQuery("test");
+		feedbackDto.setUserId(1L);
+		feedbackDto.setReview("test");
 		Feedback feedback = new Feedback();
-		feedback.setBuyerId(1L);
-		feedback.setQuery("test");
+		feedback.setUserId(1L);
+		feedback.setReview("test");
 		feedback.setCreatedAt(new Date());
 		feedback.setId(1L);
-		when(userRepository.existsById(feedbackDto.getBuyerId())).thenReturn(true);
+		when(userRepository.existsById(feedbackDto.getUserId())).thenReturn(true);
 		when(mapper.feedbackDtoToFeedback(feedbackDto)).thenReturn(feedback);
 		feedbackServiceImpl.addFeedback(apiResponseDtoBuilder, feedbackDto);
 		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
@@ -59,9 +59,9 @@ public class FeedbackServiceImplTest {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
 		Feedback feedback = new Feedback();
 		feedback.setCreatedAt(new Date());
-		feedback.setBuyerId(1L);
+		feedback.setUserId(1L);
 		feedback.setId(1L);
-		feedback.setQuery("test");
+		feedback.setReview("test");
 		List<Feedback> listOfFeedbacks = new ArrayList<Feedback>();
 		listOfFeedbacks.add(feedback);
 		when(feedbackRepository.findAll()).thenReturn(listOfFeedbacks);
