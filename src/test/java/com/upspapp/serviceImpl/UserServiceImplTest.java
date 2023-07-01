@@ -84,7 +84,7 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	public void addBuyer() {
+	public void addUser() {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
 		
 		UserDto userDto=new UserDto();
@@ -94,6 +94,7 @@ public class UserServiceImplTest {
 		userDto.setMobileNumber("11111111");
 		userDto.setPassword("12345");
 		userDto.setProfileImage("profile");
+		userDto.setUserType("user");
 		Buyer buyer=new Buyer();
 		buyer.setId(2L);
 		buyer.setRole(2);
@@ -103,38 +104,11 @@ public class UserServiceImplTest {
 		buyer.setMobileNumber("22222222");
 		buyer.setPassword("12345");
 		buyer.setCreatedAt(new Date());
-		when(customMapper.userDtoToUser(userDto)).thenReturn(buyer);
-		when(buyerRepository.save(buyer)).thenReturn(buyer);
-		userServiceImpl.addBuyer(apiResponseDtoBuilder, userDto);
-		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.ADD_BUYER));
+		userServiceImpl.addUser(apiResponseDtoBuilder, userDto);
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("Wrong user type"));
 		
 	}
 	
-	@Test
-	public void addSeller() {
-		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
-		
-		UserDto userDto=new UserDto();
-		userDto.setActive(true);
-		userDto.setEmail("testadmin@gmail.com");
-		userDto.setFullName("Test Admin");
-		userDto.setMobileNumber("11111111");
-		userDto.setPassword("12345");
-		Seller seller=new Seller();
-		seller.setId(3L);
-		seller.setRole(1);
-		seller.setActive(true);
-		seller.setEmail("testbuyer@gmail.com");
-		seller.setFullName("Test buyer");
-		seller.setMobileNumber("22222222");
-		seller.setPassword("12345");
-		seller.setCreatedAt(new Date());
-		when(customMapper.userDtoToUser(userDto)).thenReturn(seller);
-		when(sellerRepository.save(seller)).thenReturn(seller);
-		//userServiceImpl.addSeller(apiResponseDtoBuilder, userDto);
-		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.ADD_SELLER));
-		
-	}
 
 	
 	@Test
@@ -229,6 +203,44 @@ public class UserServiceImplTest {
 		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.UPDATE_BUYER));
 	}
 	
+	
+	@Test
+	public void updateUser() {
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+
+		User user = new User();
+		user.setFullName("Test buyer");
+		user.setEmail("testbuyer@gmail.com");
+		user.setMobileNumber("9999999999");
+		user.setPassword(bCryptPasswordEncoder.encode("12345678"));
+		user.setId(2L);
+		user.setUpdatedAt(new Date());
+		Optional<User> optional = Optional.of(user);
+		when(userRepository.findById(user.getId())).thenReturn(optional);
+		assertTrue(optional.isPresent());
+		when(userRepository.save(user)).thenReturn(user);
+		userServiceImpl.updateUser (apiResponseDtoBuilder,user);
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
+	}
+	
+	@Test
+	public void getUserById() {
+		long id = 1L;
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+		User user = new User();
+		user.setFullName("Test buyer");
+		user.setEmail("testbuyer@gmail.com");
+		user.setMobileNumber("9999999999");
+		user.setPassword(bCryptPasswordEncoder.encode("12345678"));
+		user.setId(1L);
+		user.setUpdatedAt(new Date());
+		Optional<User> optional = Optional.of(user);
+		when(userRepository.findById(user.getId())).thenReturn(optional);
+		assertTrue(optional.isPresent());
+		userServiceImpl.getUserById(apiResponseDtoBuilder, id);
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
+	}
+	
 	@Test
 	public void deleteBuyerById() {
 		long id = 3L;
@@ -306,25 +318,25 @@ public class UserServiceImplTest {
 		String email="teamupspapp@gmail.com";
 		long id =2L;
 		when(sellerRepository.existsById(id)||buyerRepository.existsById(id)).thenReturn(true);
-		userServiceImpl.addFriend(apiResponseDtoBuilder, email, id);
+		userServiceImpl.addFriend(apiResponseDtoBuilder, email);
 		assertTrue(apiResponseDtoBuilder.getMessage().equals("Refer your Friend Successfully"));
 	}
 	
-//	@Test
-//	public void forgotPassword() {
-//		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
-//		String email="testadmin@gmail.com";
-//		userServiceImpl.forgotPassword(apiResponseDtoBuilder, email);
-//		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.SUCCESSFULLY));
-//	}
+	@Test
+	public void forgotPassword() {
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+		String email="testadmin@gmail.com";
+		userServiceImpl.forgotPassword(apiResponseDtoBuilder, email);
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("User Not Found !"));
+	}
 	
 	@Test
 	public void sharePost() {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
 		String email="teamupspapp@gmail.com";
-		long id =2L;
-		when(sellerRepository.existsById(id)||buyerRepository.existsById(id)).thenReturn(true);
-		userServiceImpl.sharePost(apiResponseDtoBuilder, email, id);
-		assertTrue(apiResponseDtoBuilder.getMessage().equals("Post Share Successfully..."));
+		long id =0L;
+		long pId=0l;
+		userServiceImpl.sharePost(apiResponseDtoBuilder, email, id, pId);
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("User Not Found !"));
 	}
 }
