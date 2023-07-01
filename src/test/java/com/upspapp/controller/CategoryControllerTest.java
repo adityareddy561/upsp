@@ -168,4 +168,21 @@ public class CategoryControllerTest {
 				ApiResponseDtoBuilder.class);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
+	
+	@Test
+	public void getAllCategoryByLikeQuery() throws Exception {
+		String query="test";
+		String url = URL + port + "/api/getAll/category/"+query;
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.getForEntity(url,
+				ApiResponseDtoBuilder.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	@Test
+	public void getAllCategoriesWithSubcategories() throws Exception {
+		String url = URL + port + "/api/getAll/categories/subcategories";
+		ResponseEntity<ApiResponseDtoBuilder> responseEntity = restTemplate.getForEntity(url,
+				ApiResponseDtoBuilder.class);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
 }
