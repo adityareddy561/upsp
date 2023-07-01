@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.upspapp.config.CustomDateAndTimeDeserialize;
 import com.upspapp.config.CustomJsonDateSerializer;
-import com.upspapp.constants.Constants;
 
 @Entity
 @Table(name = "massage_details")
@@ -26,9 +25,7 @@ public class Message {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String message;
-	private String sender;
-	private String receiver;
+
 	@Column(nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
@@ -43,36 +40,16 @@ public class Message {
 	@JsonDeserialize(using = CustomDateAndTimeDeserialize.class)
 	private Date updatedAt;
 
+	private String message;
+	private Long sender;
+	private Long receiver;
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public String getSender() {
-		return sender;
-	}
-
-	public void setSender(String sender) {
-		this.sender = sender;
-	}
-
-	public String getReceiver() {
-		return receiver;
-	}
-
-	public void setReceiver(String receiver) {
-		this.receiver = receiver;
 	}
 
 	public Date getCreatedAt() {
@@ -90,4 +67,29 @@ public class Message {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public Long getSender() {
+		return sender;
+	}
+
+	public void setSender(Long sender) {
+		this.sender = sender;
+	}
+
+	public Long getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(Long receiver) {
+		this.receiver = receiver;
+	}
+
 }
