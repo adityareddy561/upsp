@@ -4,7 +4,6 @@
 		<title>UPSP</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link rel="stylesheet"
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 		<script
@@ -13,7 +12,11 @@
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		<link rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<script src="js/sellingCategory.js"></script>
+		<script type="text/javascript"
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQ-3cnEgApWSRMuneCN2Ekpgwuk9d9UJM&libraries=places"></script>
+		<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+			integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+			crossorigin="anonymous"></script>
 		<script src="js/custom.js"></script>
 		<link rel="stylesheet" href="css/style.css">
 		<script src="js/profile.js"></script>
