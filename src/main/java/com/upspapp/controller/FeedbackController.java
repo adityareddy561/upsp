@@ -3,6 +3,7 @@ package com.upspapp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,13 @@ public class FeedbackController {
 	public ApiResponseDto getAllFeedback() {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
 		feedbackService.getAllFeedback(builder);
+		return builder.build();
+	}
+
+	@GetMapping(value = "/feedbacks/get/product/{productId}")
+	public ApiResponseDto geFeedbacksByProductId(@PathVariable long productId) {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		feedbackService.getFeedbacksByProductId(productId, builder);
 		return builder.build();
 	}
 }

@@ -12,4 +12,6 @@ public interface IFeedbackService {
 
 	void getAllFeedback(ApiResponseDtoBuilder builder);
 
+	void getFeedbacksByProductId(long productId, ApiResponseDtoBuilder builder);
+
 }

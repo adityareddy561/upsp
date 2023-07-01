@@ -26,16 +26,17 @@ public class MessageController {
 	private IMessageService service;
 
 	@PostMapping(value = "/message/add")
-	public ApiResponseDto addMessage(@RequestBody MessageDto dto,HttpServletRequest request) {
+	public ApiResponseDto addMessage(@RequestBody MessageDto dto, HttpServletRequest request) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
 		service.addMessage(builder, dto);
 		return builder.build();
 	}
 
 	@GetMapping(value = "/messages/get/{username}/{currentuser}")
-	public ApiResponseDto getMessage(@PathVariable(name = "username") String username,@PathVariable(name = "currentuser") String currentuser) {
+	public ApiResponseDto getMessage(@PathVariable(name = "username") long username,
+			@PathVariable(name = "currentuser") long currentuser) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
-		service.getMessages(username,currentuser, builder);
+		service.getMessages(username, currentuser, builder);
 		return builder.build();
 	}
 }

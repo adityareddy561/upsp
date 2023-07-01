@@ -57,13 +57,13 @@
 	</head>
 	<body onload="getAllCategories();getPosts();">
 		<jsp:include page="navbar.jsp" />
-			<nav class="navbar navbar-inverse">
+			<!-- <nav class="navbar navbar-inverse">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav" id="categories">
 						<li class="active"><a href="#">All Categories</a></li>
 					</ul>
 				</div>
-			</nav>
+			</nav> -->
 			<div class="text-center">
 				<h1>Feedback</h1>
 			</div>
