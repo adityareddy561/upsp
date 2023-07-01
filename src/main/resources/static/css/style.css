@@ -1,0 +1,22 @@
+.bg-color {
+    background: black !important;
+}
+
+.text-color {
+    color: white !important;
+}
+
+.submit {
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: white;
+    text-transform: capitalize;
+    background-image: linear-gradient(60deg, #bd3434, #ae212f);
+    font-size: 1.2em;
+    padding: 6px;
+    border-radius: 5em;
+    overflow: hidden;
+    width: 200px;
+}

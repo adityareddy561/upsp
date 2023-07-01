@@ -14,22 +14,20 @@ function login() {
 		dataType: 'json',
 		cache: false,
 		timeout: 600000,
-		success: function(data) {
+		success: function (data) {
 			if (data['message'] == 'Login Sucessfull') {
-				console.log('response successfully...');
 				localStorage.setItem('loginUser', JSON.stringify(data.data));
 				window.location.assign('otp');
 			} else {
-				console.log(data['message']);
 				alert("User name and Password is wrong !")
-
 			}
 		},
-		error: function(e) {
+		error: function (e) {
 			alert("Internal Server Error");
 		}
 	});
 }
+
 function openForgotPasswordModal() {
 	var modal = document.getElementById("forgotPasswordModal");
 	modal.style.display = "block";
@@ -49,10 +47,11 @@ function forgetPassword() {
 		dataType: 'json',
 		cache: false,
 		timeout: 600000,
-		success: function(data) {
-			alert('email send successfully ')
+		success: function (data) {
+			$('#forgot-password-close').click();
+			alert('Your temporary password sent to email')
 		},
-		error: function() {
+		error: function () {
 			document.getElementById('feedback').innerHTML = "No Products Available";
 		}
 	});

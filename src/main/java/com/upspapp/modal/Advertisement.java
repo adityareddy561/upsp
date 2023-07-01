@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -48,6 +49,37 @@ public class Advertisement {
 	private Long sellerId;
 	private String address;
 	private String subCategoryId;
+
+	@Transient
+	private Boolean likeStatus = false;
+	@Transient
+	private Boolean saveStatus = false;
+	@Transient
+	private Long discountPrice = 0l;
+
+	public Long getDiscountPrice() {
+		return discountPrice;
+	}
+
+	public void setDiscountPrice(Long discountPrice) {
+		this.discountPrice = discountPrice;
+	}
+
+	public Boolean getLikeStatus() {
+		return likeStatus;
+	}
+
+	public void setLikeStatus(Boolean likeStatus) {
+		this.likeStatus = likeStatus;
+	}
+
+	public Boolean getSaveStatus() {
+		return saveStatus;
+	}
+
+	public void setSaveStatus(Boolean saveStatus) {
+		this.saveStatus = saveStatus;
+	}
 
 	public String getSubCategoryId() {
 		return subCategoryId;

@@ -22,19 +22,18 @@ function userRegister() {
 		dataType: 'json',
 		cache: false,
 		timeout: 600000,
-		success: function(data) {
+		success: function (data) {
 			try {
 				if (data['message'] == 'success') {
-					window.location.assign('/homepage');
+					window.location.assign('/login');
 				} else {
 					alert("User name and Password is wrong !")
-
 				}
 			} catch (error) {
 				alert("Error occurred in success block");
 			}
 		},
-		error: function(e) {
+		error: function (e) {
 			alert("Internal Server Error");
 		}
 	});

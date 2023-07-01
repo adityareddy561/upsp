@@ -7,7 +7,9 @@ import com.upspapp.modal.Advertisement;
 import com.upspapp.modal.Buyer;
 import com.upspapp.modal.Category;
 import com.upspapp.modal.Feedback;
+import com.upspapp.modal.Message;
 import com.upspapp.modal.PostLike;
+import com.upspapp.modal.Offer;
 import com.upspapp.modal.Rating;
 import com.upspapp.modal.Report;
 import com.upspapp.modal.PostSave;
@@ -17,16 +19,18 @@ import com.upspapp.modal.User;
 import com.upspapp.requestDto.AdvertisementDto;
 import com.upspapp.requestDto.CategoryDto;
 import com.upspapp.requestDto.FeedbackDto;
+import com.upspapp.requestDto.MessageDto;
 import com.upspapp.requestDto.PostLikeDto;
+import com.upspapp.requestDto.OfferDto;
 import com.upspapp.requestDto.RatingDto;
 import com.upspapp.requestDto.ReportDto;
 import com.upspapp.requestDto.PostSaveDto;
 import com.upspapp.requestDto.SubCategoryDto;
 import com.upspapp.requestDto.UserDto;
+import com.upspapp.responseDto.SubCategoryResponseDto;
 
 @Mapper(componentModel = "spring")
 public interface CustomMapper {
-
 
 	User userDtoToUser(UserDto dto);
 
@@ -48,8 +52,11 @@ public interface CustomMapper {
 
 	Buyer userDtoToBuyer(UserDto userDto);
 
+	Offer offerDtoToOffer(OfferDto dto);
+
 	Seller userDtoToSeller(UserDto dto);
 
-	
+	SubCategoryResponseDto subCategoryToSubCategoryResponseDto(SubCategory subCategory);
+
 
 }
