@@ -14,7 +14,6 @@ import com.upspapp.modal.Advertisement;
 import com.upspapp.modal.Report;
 import com.upspapp.modal.User;
 import com.upspapp.repository.AdvertisementRepository;
-import com.upspapp.repository.BuyerRepository;
 import com.upspapp.repository.ReportRepository;
 import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.ReportDto;
