@@ -16,7 +16,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 	List<Message> findAllBySenderOrReceiver(String userName, String userName2);
 
 	@Query(value = "select * from massage_details where (sender = ?1 and receiver = ?2) or (sender = ?3 and receiver = ?4) order by id asc", nativeQuery = true)
-	List<Message> findBySenderAndReceiverOrReceiverAndSender(String username, String username2, String username3,
-			String username4);
+	List<Message> findBySenderAndReceiverOrReceiverAndSender(long sender, long receiver, long receiver2, long sender2);
 
 }
