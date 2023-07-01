@@ -8,18 +8,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.upspapp.constants.Constants;
 import com.upspapp.customMapper.CustomMapper;
 import com.upspapp.modal.Category;
+import com.upspapp.modal.User;
 import com.upspapp.repository.CategoryRepository;
+import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.CategoryDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
+import com.upspapp.utility.Utility;
 
 @ExtendWith(MockitoExtension.class)
 public class CategoryServiceImplTest {
@@ -32,7 +40,17 @@ public class CategoryServiceImplTest {
 
 	@Mock
 	private CustomMapper customMapper;
+	
+	@Mock
+	private UserRepository userRepository;
+	@BeforeEach
+	public void init() {
+		MockitoAnnotations.openMocks(this);
+		User user = new User();
+		Authentication auth = new UsernamePasswordAuthenticationToken(user, null);
 
+		SecurityContextHolder.getContext().setAuthentication(auth);
+	}
 	@Test
 	public void addCategory() {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
@@ -44,8 +62,15 @@ public class CategoryServiceImplTest {
 		category.setCreatedAt(new Date());
 		when(customMapper.categoryDtoToCategory(categoryDto)).thenReturn(category);
 		when(categoryRepository.save(category)).thenReturn(category);
+		User sessionUser = new User();
+		sessionUser.setActive(true);
+		sessionUser.setEmail("test");
+		sessionUser.setFullName("test");
+		sessionUser.setId(1l);
+		sessionUser.setRole(0);
+		when(Utility.getSessionUser(userRepository)).thenReturn(sessionUser);
 		categoryServiceImpl.addCategory(apiResponseDtoBuilder, categoryDto);
-		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.ADD_CATEGORY));
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
 	}
 
 	@Test
@@ -104,4 +129,24 @@ public class CategoryServiceImplTest {
 		categoryServiceImpl.getAllCategory(apiResponseDtoBuilder);
 		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
 	}
+	
+	
+	@Test
+	public void getAllCategoryByLikeQuery() {
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+		String query="test";
+		Category category = new Category();
+		category.setId(1L);
+		category.setCreatedAt(new Date());
+		category.setCategoryName("test");
+		List<Category> listOfCategory = new ArrayList<>();
+		listOfCategory.add(category);
+		when(categoryRepository.findByCategoryNameContaining(query)).thenReturn(listOfCategory);
+		categoryServiceImpl.getAllCategoryByLikeQuery(apiResponseDtoBuilder,query);
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
+	}
+	
+	
+
+	
 }

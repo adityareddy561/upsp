@@ -8,19 +8,28 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.upspapp.constants.Constants;
 import com.upspapp.customMapper.CustomMapper;
+import com.upspapp.modal.Category;
 import com.upspapp.modal.SubCategory;
+import com.upspapp.modal.User;
 import com.upspapp.repository.CategoryRepository;
 import com.upspapp.repository.SubCategoryRepository;
+import com.upspapp.repository.UserRepository;
 import com.upspapp.requestDto.SubCategoryDto;
 import com.upspapp.responseDto.ApiResponseDto.ApiResponseDtoBuilder;
+import com.upspapp.utility.Utility;
 
 @ExtendWith(MockitoExtension.class)
 public class SubcategoryServiceImplTest {
@@ -33,24 +42,41 @@ public class SubcategoryServiceImplTest {
 
 	@Mock
 	private CustomMapper mapper;
-
+	@Mock
+	private UserRepository userRepository;
 	@Mock
 	private CategoryRepository categoryRepository;
+
+	@BeforeEach
+	public void init() {
+		MockitoAnnotations.openMocks(this);
+		User user = new User();
+		Authentication auth = new UsernamePasswordAuthenticationToken(user, null);
+
+		SecurityContextHolder.getContext().setAuthentication(auth);
+	}
 
 	@Test
 	public void addSubCategory() {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
 		SubCategoryDto subCategoryDto = new SubCategoryDto();
 		subCategoryDto.setSubCategoryName("test");
+		User sessionUser = new User();
+		sessionUser.setActive(true);
+		sessionUser.setEmail("test");
+		sessionUser.setFullName("test");
+		sessionUser.setId(1l);
+		sessionUser.setRole(0);
+		when(Utility.getSessionUser(userRepository)).thenReturn(sessionUser);
+
 		SubCategory subCategory = new SubCategory();
 		subCategory.setCreatedAt(new Date());
 		subCategory.setId(1L);
 		subCategory.setSubCategoryName("test");
 		subCategory.setCategoryId(1L);
 		when(mapper.subCategoryDtoToSubCategory(subCategoryDto)).thenReturn(subCategory);
-		when(subCategoryRepository.save(subCategory)).thenReturn(subCategory);
 		subcategoryServiceImpl.addSubCategory(apiResponseDtoBuilder, subCategoryDto);
-		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.ADD_SUB_CATEGORY));
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
 	}
 
 	@Test
@@ -88,7 +114,7 @@ public class SubcategoryServiceImplTest {
 		assertTrue(apiResponseDtoBuilder.getMessage().equals(Constants.UPDATE_SUB_CATEGORY));
 
 	}
-	
+
 	@Test
 	public void deleteSubCategoryById() {
 		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
@@ -131,6 +157,20 @@ public class SubcategoryServiceImplTest {
 		listOfSubCategory.add(subCategory);
 		when(subCategoryRepository.findAllByCategoryId(subCategory.getCategoryId())).thenReturn(listOfSubCategory);
 		subcategoryServiceImpl.getAllSubCategoryByCategoryId(apiResponseDtoBuilder, subCategory.getCategoryId());
+		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
+	}
+
+	@Test
+	public void getAllCategoriesWithSubcategories() {
+		ApiResponseDtoBuilder apiResponseDtoBuilder = new ApiResponseDtoBuilder();
+		Category category = new Category();
+		category.setId(1L);
+		category.setCreatedAt(new Date());
+		category.setCategoryName("test");
+		List<Category> listOfCategory = new ArrayList<>();
+		listOfCategory.add(category);
+		when(categoryRepository.findAll()).thenReturn(listOfCategory);
+		subcategoryServiceImpl.getAllCategoriesWithSubcategories(apiResponseDtoBuilder);
 		assertTrue(apiResponseDtoBuilder.getMessage().equals("success"));
 	}
 }
