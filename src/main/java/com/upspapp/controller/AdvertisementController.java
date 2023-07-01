@@ -92,11 +92,24 @@ public class AdvertisementController {
 		return builder.build();
 	}
 
-
 	@GetMapping(value = "/search/Product/{byOrder}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ApiResponseDto getAllProductbyOrder(@PathVariable(name = "byOrder") int byOrder) {
 		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
 		advertisementService.getAllProductbyOrder(byOrder, builder);
+		return builder.build();
+	}
+
+	@GetMapping(value = "/search/Product/location/{location}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ApiResponseDto getAllProductbyLocation(@PathVariable(name = "location") String location) {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		advertisementService.getAllProductbyLocation(location, builder);
+		return builder.build();
+	}
+
+	@GetMapping("/getAll/products/likeAndsave/status")
+	public ApiResponseDto getAllProductsWithLikeAndSaveStatus() {
+		ApiResponseDtoBuilder builder = new ApiResponseDtoBuilder();
+		advertisementService.getAllProductsWithLikeAndSaveStatus(builder);
 		return builder.build();
 	}
 }

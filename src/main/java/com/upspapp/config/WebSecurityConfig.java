@@ -23,8 +23,10 @@ public class WebSecurityConfig {
 			"/registration/**", "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**",
 			"/api/admin/add/**", "/api/user/add/**", "/api/registrationConfirm/**", "/api/otpVerification/**", "/index",
 			"/api/getAll/product", "/js/**", "/otp/**", "/api/getAll/productByQuery/**", "/api/get/product/**",
-			"/checkProfile", "/api/user/forgotPassword/", "/api/otpVerification", "/homepage", "/dashboard",
-			"/api/getAll/category" };
+			"/checkProfile", "/api/user/forgotPassword/", "/api/otpVerification", "/home", "/dashboard",
+			"/api/getAll/category", "/location", "/sellingCategory", "/api/**", "/addCategory", "/addSubCategory",
+			"/postDetails", "/myAdvertisements", "/images/**", "/listCategory", "/listSubCategory", "/listFeedback",
+			"/feedback", "/chat", "/listReport","/api/add/site/feedback" };
 
 	@Resource(name = "userService")
 	private UserDetailsService userDetailsService;
