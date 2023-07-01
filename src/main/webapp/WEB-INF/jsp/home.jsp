@@ -60,7 +60,7 @@
 			<nav class="navbar navbar-inverse">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav" id="categories">
-						<li class="active"><a href="#">All Categories</a></li>
+						<li class="active"><a onclick="searchByCategory('all')">All Categories</a></li>
 					</ul>
 				</div>
 			</nav>

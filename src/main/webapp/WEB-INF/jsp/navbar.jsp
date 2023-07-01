@@ -35,18 +35,16 @@
 		</form>
 		<ul class="nav navbar-nav navbar-right">
 			<li><a id="loginBtn" href="feedback">Feedback</a></li>
-			<% if(session.getAttribute("isLogin") != null){
-				%>
-				<li><a id="loginBtn" href="myAdvertisements">My
-						Ads</a></li>
-				<li><a id="loginBtn" href="checkProfile">Profile</a></li>
-				<li><a href="sellingCategory">Sell</a></li>
-				<li><a href="#" onclick="logout();">Logout</a></li>
-				<% }else{ %>
-					<li><a href="registration"><span class="glyphicon glyphicon-user"></span>
-							Sign Up</a></li>
-					<li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-					<% } %>
-					</ul>
-				</div>
-			</nav>
+			<li id="link1"><a id="loginBtn" href="myAdvertisements">My
+					Ads</a></li>
+			<li id="link2"><a id="loginBtn" href="checkProfile">Profile</a></li>
+			<li id="link3"><a href="sellingCategory">Sell</a></li>
+			<li id="link4"><a href="#" onclick="logout();">Logout</a></li>
+			<li id="link-signup"><a href="registration"><span class="glyphicon
+						glyphicon-user"></span>
+					Sign Up</a></li>
+			<li id="link-signin"><a href="login"><span class="glyphicon
+						glyphicon-log-in"></span> Login</a></li>
+		</ul>
+	</div>
+</nav>
